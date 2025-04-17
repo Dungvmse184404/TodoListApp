@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{D82E81B7-206D-45BF-BC9A-706A39F88662}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{FDF5C9AB-EC8A-44D5-A078-890E00069FDE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{83DDAEA3-F3AA-43C0-9B43-3A37820DC3B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoListApp.Tests", "TodoListApp.Tests\TodoListApp.Tests.csproj", "{5351F33A-6F1B-4161-B8A4-F7DE44566F60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{83DDAEA3-F3AA-43C0-9B43-3A37820DC3B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83DDAEA3-F3AA-43C0-9B43-3A37820DC3B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83DDAEA3-F3AA-43C0-9B43-3A37820DC3B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5351F33A-6F1B-4161-B8A4-F7DE44566F60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5351F33A-6F1B-4161-B8A4-F7DE44566F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5351F33A-6F1B-4161-B8A4-F7DE44566F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5351F33A-6F1B-4161-B8A4-F7DE44566F60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
