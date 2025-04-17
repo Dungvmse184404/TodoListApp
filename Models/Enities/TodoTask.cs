@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DAL.Enities;
+namespace Models.Enities;
 
 public partial class TodoTask
 {
