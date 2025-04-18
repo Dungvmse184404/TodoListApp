@@ -1,7 +1,7 @@
 ﻿using DAL.Database;
 using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Models.Enities;
+using Models.Entities;
 
 
 

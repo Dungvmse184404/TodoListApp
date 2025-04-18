@@ -1,4 +1,4 @@
-﻿using Models.Enities;
+﻿using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    interface ISubTaskService
+    public interface ISubTaskService
     {
         Task<List<SubTask>> GetAllSubTasksAsync();
         Task<SubTask> GetSubTaskByIdAsync(int id);

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Models.Enities;
+using Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

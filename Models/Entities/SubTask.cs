@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Models.Enities;
+namespace Models.Entities;
 
 public partial class SubTask
 {
