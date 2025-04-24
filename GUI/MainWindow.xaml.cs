@@ -1,7 +1,11 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
+using BLL.Services;
+using Models.Entities;
+using Label = Models.Entities.Label;
 
 namespace GUI
 {
@@ -10,6 +14,7 @@ namespace GUI
         private TimeSpan _currentTimeTracker = TimeSpan.Zero;
         private DispatcherTimer _timer = new();
         private DateTime _currentTime = DateTime.Now;
+        private TodoTaskService _todoTaskService;
 
         public MainWindow()
         {
@@ -23,6 +28,26 @@ namespace GUI
             _timer.Tick += TimeTracker_Tick;
             RealTime_Clock();
             LoadDayInWeek(_currentTime);
+            LoadTodoTasks();    
+        }
+
+        private async void LoadTodoTasks()
+        {
+            _todoTaskService = new TodoTaskService();
+            var todoList = await _todoTaskService.GetAllTodoTasksAsync();
+            var todoDict = new Dictionary<Label, List<TodoTask>>();
+            foreach (var todo in todoList)
+            {
+                if (todo.Label != null && !todoDict.ContainsKey(todo.Label))
+                {
+                    todoDict.Add(todo.Label, new List<TodoTask>());
+                    todoDict[todo.Label].Add(todo);
+                } else if (todo.Label != null)
+                {
+                    todoDict[todo.Label].Add(todo);
+                }
+            }
+            ListTasks.ItemsSource = todoDict;
         }
 
         private void CreateTaskBox()
