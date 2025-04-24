@@ -1,4 +1,6 @@
-﻿using BLL.Interfaces;
+﻿using AutoMapper;
+using BLL.Interfaces;
+using BLL.Utilities.Validators;
 using DAL.Interfaces;
 using Models.DTOs;
 using Models.Entities;
@@ -14,11 +16,12 @@ namespace BLL.Services
     public class LabelService : ILabelService
     {
         private readonly ILabelRepository _labelRepository;
-
-        public LabelService(ILabelRepository labelRepository)
+        private readonly IMapper _mapper;
+        public LabelService(ILabelRepository labelRepository, IMapper mapper)
         {
             _labelRepository = labelRepository;
-        }
+            _mapper = mapper;
+        }   
 
         /// <summary>
         /// thêm mới 1 label
@@ -27,36 +30,57 @@ namespace BLL.Services
         /// <returns></returns>
         public async Task<Label> AddLabelAsync(LabelDto newLabel)
         {
-            string status = ValidateStatus(newLabel.Status);
+            var labelDto = await ValidateLabel.ValidatelabelDto(newLabel);
             var label = new Label
             {
-                LabelName = newLabel.LabelName,
-                CreatedDate = DateTime.Now,
-                StartDate = newLabel.StartDate,
-                DueDate = newLabel.DueDate,
-                Status = status
+                LabelName = labelDto.LabelName,
+                CreatedDate = labelDto.CreateDate,
+                StartDate = labelDto.StartDate,
+                DueDate = labelDto.DueDate,
+                Status = labelDto.Status
             };
             return await _labelRepository.AddLabelAsync(label);
         }
 
-        public Task<Label> DeleteLabelAsync(int id)
+        /// <summary>
+        /// xóa 1 label
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<Label> DeleteLabelAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _labelRepository.DeleteLabelAsync(id);
         }
 
-        public async  Task<List<Label>> GetAllLabelsAsync()
+        /// <summary>
+        /// lấy tất cả label
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Label>> GetAllLabelsAsync()
         {
             return await _labelRepository.GetAllLabelsAsync();
         }
 
+        /// <summary>
+        /// lấy label theo id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<Label?> GetLabelByIdAsync(int id)
         {
             return await _labelRepository.GetLabelByIdAsync(id);
         }
 
-        public Task<Label> UpdateLabelAsync(Label label)
+        /// <summary>
+        /// cập nhật label
+        /// </summary>
+        /// <param name="label"></param>
+        /// <returns></returns>
+        public async Task<Label> UpdateLabelAsync(Label label)
         {
-            throw new NotImplementedException();
+            await ValidateLabel.ValidatelabelDto(_mapper.Map<LabelDto>(label));
+
+            return await _labelRepository.UpdateLabelAsync(label);
         }
     }
 }

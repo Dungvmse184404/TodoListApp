@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 
 namespace Models.DTOs
 {
-    public class LabelDto
+    public class DailyTaskDto
     {
-        public string LabelName { get; set; }
+        public string Title { get; set; } = null!;
 
-        public DateTime CreateDate { get; set; } = DateTime.Now;
+        public string? Description { get; set; }
+
+        public bool? IsCompleted { get; set; }
+
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         public DateTime? StartDate { get; set; }
 
         public DateTime? DueDate { get; set; }
-        public string Status { get; set; }
-
-        
     }
 }

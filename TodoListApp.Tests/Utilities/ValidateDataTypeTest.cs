@@ -9,7 +9,7 @@ using BLL.Utilities.Validators;
 
 namespace TodoListApp.Tests.Utilities
 {
-    public class ValidatorsTest
+    public class ValidateDataTypeTest
     {
         [Theory]
         [InlineData("Pending", "Pending")]
@@ -24,5 +24,7 @@ namespace TodoListApp.Tests.Utilities
             var result = ValidateDataType.ValidateStatus(status);
             Assert.Equal(expected, result);
         }
+
+
     }
 }

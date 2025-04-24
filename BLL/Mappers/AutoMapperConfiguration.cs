@@ -17,6 +17,8 @@ namespace BLL.Mappers
             {
                 //Thêm cấu hình ánh xạ chỗ này ...
                 CreateMap<Label, LabelDto>();
+                CreateMap<LabelDto, Label>();
+                CreateMap<DailyTaskDto, DailyTask >();
             }
         }
     }
