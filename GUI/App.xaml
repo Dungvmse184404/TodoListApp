@@ -4,6 +4,61 @@
              xmlns:local="clr-namespace:GUI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="ImgClose" TargetType="Border">
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Height" Value="24" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="Margin" Value="0 13 13 0" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+
+                </Trigger>
+                <Trigger Property="IsMouseCaptured" Value="True">
+
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ImgMinimize" TargetType="Border">
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Height" Value="24" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="Margin" Value="0 13 37 0" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+
+                </Trigger>
+                <Trigger Property="IsMouseCaptured" Value="True">
+
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="NormalText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+
+        <Style x:Key="SubText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#8b8c99"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style x:Key="SideBarButton" TargetType="Button">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Background" Value="#fff" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style x:Key="BorderTasksContainer" TargetType="Border">
+            <Setter Property="Background" Value="#fff" />
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#e6e8ea" />
+            <Setter Property="Padding" Value="4" />
+        </Style>
     </Application.Resources>
 </Application>

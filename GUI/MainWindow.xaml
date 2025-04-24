@@ -3,10 +3,234 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GUI"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:local="clr-namespace:GUI"  Loaded="Window_Loaded"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+         Height="600" Width="1000">
     <Grid>
+        <Border Style="{StaticResource ImgClose}" Panel.ZIndex="1" x:Name="CloseBtn" MouseUp="CloseBtn_MouseUp">
+            <Image Source="/Assets/close.png"  Width="24" Height="24"/>
+        </Border>
+        <Border Style="{StaticResource ImgMinimize}" Panel.ZIndex="1" x:Name="MinimizeBtn" MouseUp="MinimizeBtn_MouseUp">
+            <Image Source="/Assets/minimize.png" Height="24" Width="24" />
+        </Border>
 
+        <Border CornerRadius="10" Background="#f6f8fa" Padding="10 40 10 10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="4*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Background="#fff" Margin="0 0 10 0" CornerRadius="10" BorderThickness="1" BorderBrush="#e6e8ea">
+                    <StackPanel>
+                        <Border Background="#89c4fb" CornerRadius="10 10 0 0">
+                            <StackPanel Margin="5">
+                                <TextBlock Text="Hello, Toufuu" TextAlignment="Center" Foreground="#fff" FontWeight="Bold" Style="{StaticResource NormalText}"/>
+
+                                <StackPanel>
+                                    <TextBlock x:Name="RealTime" Text="12:24" TextAlignment="Right" Style="{StaticResource NormalText}"/>
+                                    <TextBlock x:Name="RealDate" Text="Mon 22/02/2004" FontSize="12" Style="{StaticResource NormalText}" TextAlignment="Right"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <Border BorderThickness="0 1" BorderBrush="#e6e8ea" Padding="0 12">
+                            <StackPanel>
+                                <TextBlock Text="Main Menu" Style="{StaticResource SubText}" Margin="8 0"/>
+                                <Border CornerRadius="10" Margin="10 8 10 16" BorderThickness="1" BorderBrush="#e6e8ea">
+                                    <StackPanel>
+                                        <Border BorderThickness="0 0 0 1" BorderBrush="#e6e8ea" Padding="0 4" >
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Assets/timer.png" Height="12" Width="12" Margin="10 0 4 0"/>
+                                                <TextBlock Text="Time tracker" FontSize="12" Style="{StaticResource NormalText}"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <Border Background="#f6f8fa" BorderThickness="0 1 0 0" BorderBrush="#e6e8ea" CornerRadius="0 0 10 10" Padding="0 4">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image x:Name="TimeTrackerPlayBtn" MouseUp="TimeTrackerPlayBtn_MouseUp" Source="/Assets/play.png" Height="12" Width="12" Margin="10 0 4 0"/>
+                                                <TextBlock x:Name="TimeTracker" Text="00:00:00" FontWeight="Bold" FontSize="16" Style="{StaticResource NormalText}"/>
+                                                <Image x:Name="TimeTrackerResetBtn" MouseUp="TimeTrackerResetBtn_MouseUp" Source="/Assets/replay.png" Height="12" Width="12" Margin="40 0 0 0"/>
+                                                <Image x:Name="TimeTrackerStopBtn" MouseUp="TimeTrackerStopBtn_MouseUp" Source="/Assets/pause.png" Height="12" Width="12" />
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Margin="24 0" CornerRadius="5">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/Assets/calendar.png" Height="12" Width="12"
+                                            Margin="0 0 4 0"/>
+                                        <TextBlock Text="Calendar" Style="{StaticResource NormalText}" FontSize="14" />
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="12*" />
+                        </Grid.RowDefinitions>
+
+                        <Border Background="#fff" Margin="0 0 10 0" CornerRadius="10" BorderThickness="1" BorderBrush="#e6e8ea">
+                            <TextBlock Text="Calendar" Style="{StaticResource NormalText}" FontSize="32" Padding="12 0 0 0" FontWeight="Bold"/>
+                        </Border>
+
+                        <Border Grid.Row="1" Margin="0 10 0 0" Background="#fff" CornerRadius="10" BorderThickness="1" BorderBrush="#e6e8ea">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="1.5*" />
+                                    <RowDefinition Height="9*"/>
+                                </Grid.RowDefinitions>
+
+                                <Border BorderThickness="0 0 0 1" BorderBrush="#e6e8ea">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Image x:Name="BackMonthBtn" MouseUp="BackMonthBtn_MouseUp" Source="/Assets/arrow_back.png" Width="12" Height="12" Margin="8 0" />
+                                        <TextBlock x:Name="MonthLabel" Text="Septemper" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        <Image x:Name="ForwardMonthBtn" MouseUp="ForwardMonthBtn_MouseUp" Source="/Assets/arrow_forward.png" Width="12" Height="12" Margin="8 0" />
+                                        <Border Margin="570 0 0 0">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Assets/add_circle.png" Width="24" Height="24"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Grid.Row="1" BorderThickness="0 0 0 1" BorderBrush="#e6e8ea">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.5*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="0.5*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border x:Name="BackWeekBtn" MouseUp="BackWeekBtn_MouseUp">
+                                            <Image Source="/Assets/arrow_back.png" Height="24" Width="24"/>
+                                        </Border>
+                                        <Border Grid.Column="1" BorderThickness="1 0" BorderBrush="#e6e8ea">
+                                            <TextBlock x:Name="MonLabel" Text="Sun 8" Style="{StaticResource NormalText}" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center"/>
+                                        </Border>
+                                        <Border Grid.Column="2" BorderBrush="#e6e8ea">
+                                            <TextBlock x:Name="TueLabel" Text="Sun 8" Style="{StaticResource NormalText}" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center"/>
+                                        </Border>
+                                        <Border Grid.Column="3" BorderThickness="1 0" BorderBrush="#e6e8ea">
+                                            <TextBlock x:Name="WedLabel" Text="Sun 8" Style="{StaticResource NormalText}" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center"/>
+                                        </Border>
+                                        <Border Grid.Column="4" BorderThickness="1 0" BorderBrush="#e6e8ea">
+                                            <TextBlock x:Name="ThuLabel" Text="Sun 8" Style="{StaticResource NormalText}" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center"/>
+                                        </Border>
+                                        <Border Grid.Column="5" BorderThickness="1 0" BorderBrush="#e6e8ea">
+                                            <TextBlock x:Name="FriLabel" Text="Sun 8" Style="{StaticResource NormalText}" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center"/>
+                                        </Border>
+                                        <Border Grid.Column="6" BorderBrush="#e6e8ea">
+                                            <TextBlock x:Name="SatLabel" Text="Sun 8" Style="{StaticResource NormalText}" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center"/>
+                                        </Border>
+                                        <Border Grid.Column="7" BorderThickness="1 0" BorderBrush="#e6e8ea">
+                                            <TextBlock x:Name="SunLabel" Text="Sun 8" Style="{StaticResource NormalText}" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center"/>
+                                        </Border>
+                                        <Border x:Name="ForwardWeekBtn" MouseUp="ForwardWeekBtn_MouseUp" Grid.Column="8">
+                                            <Image Source="/Assets/arrow_forward.png" Height="24" Width="24"/>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+
+                                <Border Grid.Row="2" >
+                                    <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.5*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="0.5*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel>
+                                                <StackPanel>
+                                                    <TextBlock Text="" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="01:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="02:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="03:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="04:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="05:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="06:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="07:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="08:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="09:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="10:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="11:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="12:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="13:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="14:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="15:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="16:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="17:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="18:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="19:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="20:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="21:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="22:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <TextBlock Text="23:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                </StackPanel>
+                                            </StackPanel>
+
+                                            <Border x:Name="MondayColumn" Background="#f6f8fa" Grid.Column="1" BorderThickness="1 0" BorderBrush="#e6e8ea">
+                                                <Canvas x:Name="MondayColumnCanvas">
+
+                                                </Canvas>
+                                            </Border>
+                                            <Border Background="#f6f8fa" Grid.Column="2" BorderBrush="#e6e8ea">
+                                                <Canvas>
+
+                                                </Canvas>
+                                            </Border>
+                                            <Border Background="#f6f8fa" Grid.Column="3" BorderThickness="1 0" BorderBrush="#e6e8ea">
+                                                <Canvas>
+
+                                                </Canvas>
+                                            </Border>
+                                            <Border Background="#f6f8fa" Grid.Column="4" BorderBrush="#e6e8ea">
+                                                <Canvas>
+
+                                                </Canvas>
+                                            </Border>
+                                            <Border Background="#f6f8fa" Grid.Column="5" BorderThickness="1 0" BorderBrush="#e6e8ea">
+                                                <Canvas>
+
+                                                </Canvas>
+                                            </Border>
+                                            <Border Background="#f6f8fa" Grid.Column="6" BorderBrush="#e6e8ea">
+                                                <Canvas>
+
+                                                </Canvas>
+                                            </Border>
+                                            <Border Background="#f6f8fa" Grid.Column="7" BorderThickness="1 0" BorderBrush="#e6e8ea">
+                                                <Canvas>
+
+                                                </Canvas>
+                                            </Border>
+                                        </Grid>
+                                    </ScrollViewer>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

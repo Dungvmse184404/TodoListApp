@@ -1,24 +1,175 @@
-﻿using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace GUI
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private TimeSpan _currentTimeTracker = TimeSpan.Zero;
+        private DispatcherTimer _timer = new();
+        private DateTime _currentTime = DateTime.Now;
+
         public MainWindow()
         {
             InitializeComponent();
+            UpdateTimeNow();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += TimeTracker_Tick;
+            RealTime_Clock();
+            LoadDayInWeek(_currentTime);
+        }
+
+        private void CreateTaskBox()
+        {
+            Border border = new Border()
+            {
+                Width = MondayColumnCanvas.ActualWidth - 8
+            };
+            border.Style = (Style)Application.Current.FindResource("BorderTasksContainer");
+
+            Grid grid = new Grid();
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            grid.RowDefinitions.Add(new RowDefinition());
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+            StackPanel tags = new StackPanel()
+            {
+                Height = 20,
+                Background = Brushes.Black,
+            };
+
+            TextBlock textBlock = new TextBlock()
+            {
+                Text = "Task name"
+            };
+
+            StackPanel totalTime = new StackPanel()
+            {
+                Height = 20,
+                Background = Brushes.Black,
+            };
+
+            Grid.SetRow(tags, 0);
+            Grid.SetRow(textBlock, 1);
+            Grid.SetRow(totalTime, 2);
+            grid.Children.Add(tags);
+            grid.Children.Add(textBlock);
+            grid.Children.Add(totalTime);
+
+            Canvas.SetLeft(border, 4);
+            Canvas.SetTop(border, CalculateTaskBoxPosition());
+
+            border.Child = grid;
+            MondayColumnCanvas.Children.Add(border);
+        }
+
+        private double CalculateTaskBoxPosition()
+        {
+            TimeSpan currentTime = DateTime.Now.TimeOfDay;
+            TimeSpan totalDay = TimeSpan.FromHours(24);
+            double ratio = currentTime.TotalSeconds / totalDay.TotalSeconds;
+
+            return MondayColumnCanvas.ActualHeight * ratio;
+        }
+
+        private void BackWeekBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            _currentTime = _currentTime.Add(TimeSpan.FromDays(-7));
+            LoadDayInWeek(_currentTime);
+        }
+
+        private void ForwardWeekBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            _currentTime = _currentTime.Add(TimeSpan.FromDays(7));
+            LoadDayInWeek(_currentTime);
+        }
+
+        private void BackMonthBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            _currentTime = _currentTime.Add(TimeSpan.FromDays(-30));
+            LoadDayInWeek(_currentTime);
+        }
+
+        private void ForwardMonthBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            _currentTime = _currentTime.Add(TimeSpan.FromDays(30));
+            LoadDayInWeek(_currentTime);
+        }
+
+        private void LoadDayInWeek(DateTime date)
+        {
+            // 0 1 2 3 4 5 6 
+            //       t5
+            DateTime monday = date.AddDays(-((int)date.DayOfWeek - 1));
+
+            MonthLabel.Text = $"{date:MMMM}";
+
+            MonLabel.Text = $"{monday:ddd dd}";
+            TueLabel.Text = $"{monday.Add(TimeSpan.FromDays(1)):ddd dd}";
+            WedLabel.Text = $"{monday.Add(TimeSpan.FromDays(2)):ddd dd}";
+            ThuLabel.Text = $"{monday.Add(TimeSpan.FromDays(3)):ddd dd}";
+            FriLabel.Text = $"{monday.Add(TimeSpan.FromDays(4)):ddd dd}";
+            SatLabel.Text = $"{monday.Add(TimeSpan.FromDays(5)):ddd dd}";
+            SunLabel.Text = $"{monday.Add(TimeSpan.FromDays(6)):ddd dd}";
+        }
+
+        private void TimeTrackerPlayBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            _timer.Start();
+        }
+
+        private void TimeTrackerResetBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            _timer.Stop();
+            _currentTimeTracker = TimeSpan.Zero;
+            TimeTracker.Text = "00:00:00";
+        }
+
+        private void TimeTrackerStopBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            _timer.Stop();
+        }
+
+        private void TimeTracker_Tick(object sender, EventArgs e)
+        {
+            _currentTimeTracker = _currentTimeTracker.Add(TimeSpan.FromSeconds(1));
+            TimeTracker.Text = _currentTimeTracker.ToString(@"hh\:mm\:ss");
+        }
+
+        private void RealTime_Clock()
+        {
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += RealTime_Tick;
+            timer.Start();
+        }
+
+        private void RealTime_Tick(object sender, EventArgs e)
+        {
+            RealTime.Text = $"{DateTime.Now:HH:mm}";
+            RealDate.Text = $"{DateTime.Now:ddd dd/MM/yyyy}";
+        }
+
+        private void UpdateTimeNow()
+        {
+            RealTime.Text = $"{DateTime.Now:HH:mm}";
+            RealDate.Text = $"{DateTime.Now:ddd dd/MM/yyyy}";
+        }
+
+        private void CloseBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void MinimizeBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
     }
 }
