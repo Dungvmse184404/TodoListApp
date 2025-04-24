@@ -1,4 +1,5 @@
 ﻿using BLL.Interfaces;
+using DAL.Interfaces;
 using Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,24 +11,31 @@ namespace BLL.Services
 {
     public class TodoTaskService : ITodoTaskService
     {
+        private readonly ITodoTaskRepository _todoTaskRepository;
+
+        public TodoTaskService(ITodoTaskRepository todoTaskRepository)
+        {
+            _todoTaskRepository = todoTaskRepository;
+        }
+
         public Task<TodoTask> AddTodoTaskAsync(TodoTask todoTask)
         {
             throw new NotImplementedException();
         }
 
-        public Task<TodoTask> DeleteTodoTaskAsync(int id)
+        public async Task<TodoTask> DeleteTodoTaskAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _todoTaskRepository.DeleteTodoTaskAsync(id);
         }
 
-        public Task<List<TodoTask>> GetAllTodoTasksAsync()
+        public async Task<List<TodoTask>> GetAllTodoTasksAsync()
         {
-            throw new NotImplementedException();
+            return await _todoTaskRepository.GetAllTodoTasksAsync();
         }
 
-        public Task<TodoTask> GetTodoTaskByIdAsync(int id)
+        public async Task<TodoTask> GetTodoTaskByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _todoTaskRepository.GetTodoTaskByIdAsync(id);
         }
 
         public Task<TodoTask> UpdateTodoTaskAsync(TodoTask todoTask)

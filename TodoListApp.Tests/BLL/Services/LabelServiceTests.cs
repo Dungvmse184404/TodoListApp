@@ -29,6 +29,9 @@ namespace TodoListApp.Tests.BLL.Services
             };
         }
 
+
+
+
         //--------------------------- Test GetAllLabelsAsync ------------------------
         [Theory]
         [InlineData(1, "Công việc quan trọng", "InProgress")]
@@ -42,11 +45,11 @@ namespace TodoListApp.Tests.BLL.Services
             var result = await _labelService.GetAllLabelsAsync();
 
             Assert.NotNull(result);
-            Assert.Equal(5, result.Count); 
+            Assert.Equal(5, result.Count);
 
             var label = result.Find(l => l.LabelId == labelId);
             Assert.NotNull(label);
-            Assert.Equal(name, label.LabelName); 
+            Assert.Equal(name, label.LabelName);
             Assert.Equal(status, label.Status);
         }
 
@@ -57,8 +60,9 @@ namespace TodoListApp.Tests.BLL.Services
         [InlineData(5, "Thử nghiệm các trường null")]
         public async Task GetLabelByIdAsync_ShouldReturnLabel_WhenLabelExists(int labelId, string expectedLabelName)
         {
-            var label = new Label { LabelId = labelId, LabelName = expectedLabelName };
+            var label = _labels.FirstOrDefault(l => l.LabelId == labelId);
             _mockLabelRepository.Setup(repo => repo.GetLabelByIdAsync(labelId)).ReturnsAsync(label);
+
 
             var result = await _labelService.GetLabelByIdAsync(labelId);
 
@@ -68,16 +72,49 @@ namespace TodoListApp.Tests.BLL.Services
         }
 
         [Theory]
-        [InlineData(-1)] 
+        [InlineData(-1)]
         [InlineData(1000)]
         public async Task GetLabelByIdAsync_ShouldReturnNull_WhenLabelDoesNotExist(int labelId)
         {
-            _mockLabelRepository.Setup(repo => repo.GetLabelByIdAsync(labelId)).ReturnsAsync((Label)null);
+            var label = _labels.FirstOrDefault(l => l.LabelId == labelId);
+            _mockLabelRepository.Setup(repo => repo.GetLabelByIdAsync(labelId)).ReturnsAsync(label);
 
             var result = await _labelService.GetLabelByIdAsync(labelId);
 
             Assert.Null(result);
         }
-        //---------------------------------------------------------------------------
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(5)]
+        public async Task GetLabelByIdAsync_ShouldReturnNull_WhenLabelDoesExist(int labelId)
+        {
+            var label = _labels.FirstOrDefault(l => l.LabelId == labelId);
+            _mockLabelRepository.Setup(repo => repo.GetLabelByIdAsync(labelId)).ReturnsAsync(label);
+
+            var result = await _labelService.GetLabelByIdAsync(labelId);
+
+            Assert.NotNull(result);
+        }
+        //------------------------------ Test DeleteLabelAsync -------------------------
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        public async Task DeleteLabelAsync_ShouldReturnNull_AfterDeletion(int labelId)
+        {
+            var label = _labels.FirstOrDefault(l => l.LabelId == labelId);
+
+            _mockLabelRepository.Setup(repo => repo.DeleteLabelAsync(labelId)).ReturnsAsync(label);
+            var result = await _labelService.DeleteLabelAsync(labelId);
+
+            _mockLabelRepository.Setup(repo => repo.GetLabelByIdAsync(labelId)).ReturnsAsync((Label)null);
+            Assert.NotNull(result);
+
+            var afterDelete = await _labelService.GetLabelByIdAsync(labelId);
+
+            Assert.Null(afterDelete);
+        }
+
     }
 }
