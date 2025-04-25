@@ -94,7 +94,7 @@
                                         <Image x:Name="ForwardMonthBtn" MouseUp="ForwardMonthBtn_MouseUp" Source="/Assets/arrow_forward.png" Width="12" Height="12" Margin="8 0" />
                                         <Border Margin="570 0 0 0">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="/Assets/add_circle.png" Width="24" Height="24"/>
+                                                <Image x:Name="AddDailyTaskBtn" MouseUp="AddDailyTaskBtn_MouseUp" Source="/Assets/add_circle.png" Width="24" Height="24"/>
                                             </StackPanel>
                                         </Border>
                                     </StackPanel>
@@ -161,30 +161,78 @@
 
                                             <StackPanel>
                                                 <StackPanel>
-                                                    <TextBlock Text="" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="01:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="02:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="03:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="04:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="05:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="06:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="07:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="08:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="09:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="10:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="11:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="12:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="13:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="14:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="15:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="16:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="17:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="18:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="19:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="20:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="21:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="22:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
-                                                    <TextBlock Text="23:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="01:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="02:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="03:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="04:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="05:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="06:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="07:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="08:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="09:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="10:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="11:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="12:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="13:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="14:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="15:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="16:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="17:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="18:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="19:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="20:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="21:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0 0 0 1">
+                                                        <TextBlock Text="22:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
+                                                    <Border BorderBrush="Black" BorderThickness="0">
+                                                        <TextBlock Text="23:00" Style="{StaticResource NormalText}" TextAlignment="Center" FontSize="14" FontWeight="Bold" Height="100"/>
+                                                    </Border>
                                                 </StackPanel>
                                             </StackPanel>
 
