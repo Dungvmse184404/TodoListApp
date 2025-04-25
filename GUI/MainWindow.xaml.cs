@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -29,7 +30,7 @@ namespace GUI
             _timer.Tick += TimeTracker_Tick;
             RealTime_Clock();
             LoadDayInWeek(_currentTime);
-            LoadDailyTasksForWeek(_currentTime);    
+            LoadDailyTasksForWeek(_currentTime);
         }
 
         private async void LoadDailyTasksForWeek(DateTime date)
@@ -52,27 +53,27 @@ namespace GUI
                 {
                     MondayColumnCanvas.Children.Add(border);
                 }
-                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(1)))
+                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(1)).Date)
                 {
                     TuesdayColumnCanvas.Children.Add(border);
                 }
-                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(2)))
+                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(2)).Date)
                 {
                     WednesdayColumnCanvas.Children.Add(border);
                 }
-                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(3)))
+                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(3)).Date)
                 {
                     ThursdayColumnCanvas.Children.Add(border);
                 }
-                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(4)))
+                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(4)).Date)
                 {
                     FridayColumnCanvas.Children.Add(border);
                 }
-                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(5)))
+                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(5)).Date)
                 {
                     SaturdayColumnCanvas.Children.Add(border);
                 }
-                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(6)))
+                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(6)).Date)
                 {
                     SundayColumnCanvas.Children.Add(border);
                 }
@@ -83,7 +84,8 @@ namespace GUI
         {
             Border border = new Border()
             {
-                Width = MondayColumnCanvas.ActualWidth - 8
+                Width = MondayColumn.ActualWidth - 8,
+                Height = CalculateTaskBoxHeight(dailyTask.StartDate.Value, dailyTask.DueDate.Value)
             };
             border.Style = (Style)Application.Current.FindResource("BorderTasksContainer");
 
@@ -91,11 +93,12 @@ namespace GUI
             grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             grid.RowDefinitions.Add(new RowDefinition());
             grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
             TextBlock startTime = new TextBlock()
             {
                 Text = $"{dailyTask.StartDate.Value:HH:mm}",
-                Style = (Style)Application.Current.FindResource("NormalText"),
-                Margin = new Thickness(0, 5, 0, 5)
+                Style = (Style)Application.Current.FindResource("SubText"),
+                Margin = new Thickness(0, 2, 0, 0),
             };
 
             TextBlock title = new TextBlock();
@@ -107,11 +110,14 @@ namespace GUI
             TextBlock endTime = new TextBlock()
             {
                 Text = $"{dailyTask.DueDate.Value:HH:mm}",
-                Style = (Style)Application.Current.FindResource("NormalText"),
-                Margin = new Thickness(0, 5, 0, 5)
+                Style = (Style)Application.Current.FindResource("SubText"),
+                Margin = new Thickness(0, 2, 0, 0)
             };
 
-            StackPanel desc = new StackPanel();
+            StackPanel desc = new StackPanel()
+            {
+                Width = 400
+            };
             TextBlock textBlock = new TextBlock()
             {
                 Text = "Description",
@@ -122,7 +128,8 @@ namespace GUI
             {
                 Text = dailyTask.Description,
                 Style = (Style)Application.Current.FindResource("NormalText"),
-                Margin = new Thickness(0, 10, 0, 10)
+                Margin = new Thickness(0, 10, 0, 10),
+                TextWrapping = TextWrapping.Wrap    
             };
             desc.Children.Add(textBlock);
             desc.Children.Add(descDetail);
@@ -153,9 +160,30 @@ namespace GUI
             return MondayColumnCanvas.ActualHeight * ratio;
         }
 
+        private double CalculateTaskBoxHeight(DateTime fromTime, DateTime toTime)
+        {
+            TimeSpan diff = toTime - fromTime;
+            TimeSpan total = TimeSpan.FromHours(24);
+            double ratio = diff.TotalSeconds / total.TotalSeconds;
+
+            return MondayColumnCanvas.ActualHeight * ratio;
+        }
+
+        private void RemoveTasksDisplay()
+        {
+            MondayColumnCanvas.Children.Clear();
+            TuesdayColumnCanvas.Children.Clear();
+            WednesdayColumnCanvas.Children.Clear();
+            ThursdayColumnCanvas.Children.Clear();
+            FridayColumnCanvas.Children.Clear();
+            SaturdayColumnCanvas.Children.Clear();
+            SundayColumnCanvas.Children.Clear();
+        }
+
         private void BackWeekBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _currentTime = _currentTime.Add(TimeSpan.FromDays(-7));
+            RemoveTasksDisplay();
             LoadDayInWeek(_currentTime);
             LoadDailyTasksForWeek(_currentTime);
         }
@@ -163,6 +191,7 @@ namespace GUI
         private void ForwardWeekBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _currentTime = _currentTime.Add(TimeSpan.FromDays(7));
+            RemoveTasksDisplay();
             LoadDayInWeek(_currentTime);
             LoadDailyTasksForWeek(_currentTime);
         }
@@ -170,6 +199,7 @@ namespace GUI
         private void BackMonthBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _currentTime = _currentTime.Add(TimeSpan.FromDays(-30));
+            RemoveTasksDisplay();
             LoadDayInWeek(_currentTime);
             LoadDailyTasksForWeek(_currentTime);
         }
@@ -177,6 +207,7 @@ namespace GUI
         private void ForwardMonthBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _currentTime = _currentTime.Add(TimeSpan.FromDays(30));
+            RemoveTasksDisplay();
             LoadDayInWeek(_currentTime);
             LoadDailyTasksForWeek(_currentTime);
         }
