@@ -1,0 +1,32 @@
+﻿<Window x:Class="GUI.DailyTaskDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GUI"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+         Height="400" Width="600">
+    <Grid>
+        <Border Style="{StaticResource ImgClose}" Panel.ZIndex="1" x:Name="CloseBtn" MouseUp="CloseBtn_MouseUp">
+            <Image Source="/Assets/close.png"  Width="24" Height="24"/>
+        </Border>
+
+        <Border CornerRadius="10" Background="#f6f8fa" Padding="10 40 10 10">
+            <Canvas>
+                <Label Content="Title" />
+                <TextBox x:Name="TitleInput" Canvas.Left="98" Canvas.Top="7" HorizontalAlignment="Left" VerticalAlignment="Center" Width="424"/>
+                <Label Content="Description" HorizontalAlignment="Center" Canvas.Top="30" VerticalAlignment="Top" />
+                <TextBox x:Name="DescInput" Canvas.Left="98" Canvas.Top="37" Width="424" HorizontalAlignment="Center" VerticalAlignment="Top" Height="100" />
+                <Label Content="Date" HorizontalAlignment="Left" Canvas.Top="153" VerticalAlignment="Center" Canvas.Left="-1" />
+                <DatePicker Canvas.Left="98" Canvas.Top="157" />
+                <Label Content="Start time" HorizontalAlignment="Center" Canvas.Top="153" VerticalAlignment="Center" Canvas.Left="208" />
+                <materialDesign:TimePicker x:Name="StartTime" Canvas.Left="310" Canvas.Top="149" HorizontalAlignment="Center" VerticalAlignment="Top" Height="32" Width="100" BorderThickness="1" BorderBrush="Black" Padding="4"/>
+                <Label Content="End time" HorizontalAlignment="Center" Canvas.Top="198" VerticalAlignment="Top" Canvas.Left="208" />
+                <materialDesign:TimePicker x:Name="EndTime" Canvas.Left="310" Canvas.Top="198" HorizontalAlignment="Center" VerticalAlignment="Top" Height="32" Width="100" BorderThickness="1" BorderBrush="Black" Padding="4"/>
+                <Button Content="Save" Style="{StaticResource ActionButton}" Canvas.Left="183" Canvas.Top="265" />
+                <Button Content="Cancel" Style="{StaticResource ActionButton}" Canvas.Left="290" Canvas.Top="265" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            </Canvas>
+        </Border>
+    </Grid>
+</Window>

@@ -2,81 +2,92 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GUI"
-             StartupUri="MainWindow.xaml">
+             StartupUri="DailyTaskDetailWindow.xaml">
     <Application.Resources>
-        <Style x:Key="ImgClose" TargetType="Border">
-            <Setter Property="Width" Value="24" />
-            <Setter Property="Height" Value="24" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="Margin" Value="0 13 13 0" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="ImgClose" TargetType="Border">
+                <Setter Property="Width" Value="24" />
+                <Setter Property="Height" Value="24" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="Margin" Value="0 13 13 0" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
 
-                </Trigger>
-                <Trigger Property="IsMouseCaptured" Value="True">
+                    </Trigger>
+                    <Trigger Property="IsMouseCaptured" Value="True">
 
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
 
-        <Style x:Key="ImgMinimize" TargetType="Border">
-            <Setter Property="Width" Value="24" />
-            <Setter Property="Height" Value="24" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="Margin" Value="0 13 37 0" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
+            <Style x:Key="ImgMinimize" TargetType="Border">
+                <Setter Property="Width" Value="24" />
+                <Setter Property="Height" Value="24" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="Margin" Value="0 13 37 0" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
 
-                </Trigger>
-                <Trigger Property="IsMouseCaptured" Value="True">
+                    </Trigger>
+                    <Trigger Property="IsMouseCaptured" Value="True">
 
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
 
-        <Style x:Key="NormalText" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Calibri" />
-            <Setter Property="FontSize" Value="18" />
-        </Style>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="Calibri" />
+                <Setter Property="FontSize" Value="18" />
+            </Style>
 
-        <Style x:Key="SubText" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#8b8c99"/>
-            <Setter Property="FontSize" Value="12"/>
-        </Style>
+            <Style x:Key="NormalText" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Calibri" />
+                <Setter Property="FontSize" Value="18" />
+            </Style>
 
-        <Style x:Key="SideBarButton" TargetType="Button">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="Background" Value="#fff" />
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="BorderThickness" Value="0" />
-        </Style>
+            <Style x:Key="SubText" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="#8b8c99"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
 
-        <Style x:Key="BorderTasksContainer" TargetType="Border">
-            <Setter Property="Background" Value="#fff" />
-            <Setter Property="CornerRadius" Value="5" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="#e6e8ea" />
-            <Setter Property="Padding" Value="4" />
-        </Style>
+            <Style x:Key="SideBarButton" TargetType="Button">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Background" Value="#fff" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="BorderThickness" Value="0" />
+            </Style>
 
-        <Style x:Key="ActionButton" TargetType="Button">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="Background" Value="#F7E1D7" />
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="4 4" />
-            <Setter Property="Width" Value="80" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="4" Padding="4" Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+            <Style x:Key="BorderTasksContainer" TargetType="Border">
+                <Setter Property="Background" Value="#fff" />
+                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="#e6e8ea" />
+                <Setter Property="Padding" Value="4" />
+            </Style>
+
+            <Style x:Key="ActionButton" TargetType="Button">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Background" Value="#F7E1D7" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="4 4" />
+                <Setter Property="Width" Value="80" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="4" Padding="4" Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

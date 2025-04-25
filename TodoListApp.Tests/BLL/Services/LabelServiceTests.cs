@@ -18,7 +18,7 @@ namespace TodoListApp.Tests.BLL.Services
         public LabelServiceTests()
         {
             _mockLabelRepository = new Mock<ILabelRepository>();
-            _labelService = new LabelService(_mockLabelRepository.Object);
+            //_labelService = new LabelService(_mockLabelRepository.Object);
             _labels = new List<Label>
             {
                 new Label { LabelId = 1, LabelName = "Công việc quan trọng", Status = "InProgress" },

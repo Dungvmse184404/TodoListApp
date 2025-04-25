@@ -28,15 +28,14 @@ namespace GUI
             _timer.Tick += TimeTracker_Tick;
             RealTime_Clock();
             LoadDayInWeek(_currentTime);
-            LoadTodoTasks();    
         }
 
-        private async void LoadTodoTasks()
+        private void LoadDailyTasks()
         {
-            
+
         }
 
-        private void CreateTaskBox()
+        private void CreateTaskBox(DailyTask dailyTask)
         {
             Border border = new Border()
             {
@@ -49,29 +48,32 @@ namespace GUI
             grid.RowDefinitions.Add(new RowDefinition());
             grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
-            StackPanel tags = new StackPanel()
+            TextBlock startTime = new TextBlock()
             {
-                Height = 20,
-                Background = Brushes.Black,
+                Text = $"{dailyTask.StartDate.Value:HH:mm}",
+                Style = (Style)Application.Current.FindResource("NormalText"),
+                Margin = new Thickness(0, 5, 0, 5)
             };
 
-            TextBlock textBlock = new TextBlock()
+            TextBlock title = new TextBlock();
+            title.Style = (Style)Application.Current.FindResource("NormalText");
+            title.Text = dailyTask.Title;
+            title.TextAlignment = TextAlignment.Center;
+            title.Margin = new Thickness(0, 10, 0, 10);
+
+            TextBlock endTime = new TextBlock()
             {
-                Text = "Task name"
+                Text = $"{dailyTask.DueDate.Value:HH:mm}",
+                Style = (Style)Application.Current.FindResource("NormalText"),
+                Margin = new Thickness(0, 5, 0, 5)
             };
 
-            StackPanel totalTime = new StackPanel()
-            {
-                Height = 20,
-                Background = Brushes.Black,
-            };
-
-            Grid.SetRow(tags, 0);
-            Grid.SetRow(textBlock, 1);
-            Grid.SetRow(totalTime, 2);
-            grid.Children.Add(tags);
-            grid.Children.Add(textBlock);
-            grid.Children.Add(totalTime);
+            Grid.SetRow(startTime, 0);
+            Grid.SetRow(title, 1);
+            Grid.SetRow(endTime, 2);
+            grid.Children.Add(startTime);
+            grid.Children.Add(title);
+            grid.Children.Add(endTime);
 
             Canvas.SetLeft(border, 4);
             Canvas.SetTop(border, CalculateTaskBoxPosition());
