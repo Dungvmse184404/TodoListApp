@@ -286,6 +286,8 @@ namespace GUI
         {
             DailyTaskDetailWindow dailyTaskDetailWindow = new DailyTaskDetailWindow();  
             dailyTaskDetailWindow.ShowDialog();
+
+            LoadDailyTasksForWeek(_currentTime);
         }
     }
 }

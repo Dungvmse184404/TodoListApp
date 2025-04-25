@@ -1,6 +1,7 @@
 ﻿using BLL.Interfaces;
 using BLL.Utilities.Validators;
 using DAL.Interfaces;
+using DAL.Repositories;
 using Models.DTOs;
 using Models.Entities;
 using System;
@@ -13,12 +14,10 @@ namespace BLL.Services
 {
     public class SubTaskService : ISubTaskService
     {
-        private readonly ISubTaskRepository _subTaskRepository;
-        private readonly ValidateSubTask _validator;
-        public SubTaskService(ISubTaskRepository subTaskRepository, ValidateSubTask validator)
+        private readonly ISubTaskRepository _subTaskRepository = new SubTaskRepository();
+        private readonly ValidateSubTask _validator = new();
+        public SubTaskService()
         {
-            _subTaskRepository = subTaskRepository;
-            _validator = validator;
         }
 
         public async Task<SubTask> AddSubTaskAsync(SubTaskDto subTaskDto)

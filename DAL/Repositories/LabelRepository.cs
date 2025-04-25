@@ -10,9 +10,9 @@ namespace DAL.Repositories
     public class LabelRepository : ILabelRepository
     {
         private readonly TodoListAppDbContext _dbContext;
-        public LabelRepository(TodoListAppDbContext dbContext)
+        public LabelRepository()
         {
-            _dbContext = dbContext;
+            _dbContext = new TodoListAppDbContext();
         }
 
         public async Task<List<Label>> GetAllLabelsAsync()

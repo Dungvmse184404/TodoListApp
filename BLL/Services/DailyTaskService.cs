@@ -14,13 +14,11 @@ namespace BLL.Services
 {
     public class DailyTaskService : IDailyTaskService
     {
-        private readonly IDailyTaskRepository _dailyTaskRepository;
-        private readonly ValidateTask _validateTask;
+        private readonly IDailyTaskRepository _dailyTaskRepository = new DailyTaskRepository();
+        private readonly ValidateTask _validateTask = new ValidateTask();
 
-        public DailyTaskService(IDailyTaskRepository dailyTaskRepository, ValidateTask validateTask)
+        public DailyTaskService()
         {
-            _dailyTaskRepository = dailyTaskRepository;
-            _validateTask = validateTask;
         }
 
 

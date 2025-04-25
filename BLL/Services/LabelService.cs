@@ -1,6 +1,7 @@
 ﻿using BLL.Interfaces;
 using BLL.Utilities.Validators;
 using DAL.Interfaces;
+using DAL.Repositories;
 using Models.DTOs;
 using Models.Entities;
 using System;
@@ -14,13 +15,10 @@ namespace BLL.Services
 {
     public class LabelService : ILabelService
     {
-        private readonly ILabelRepository _labelRepository;
-        private ValidateLabel _validator;
-        public LabelService(ILabelRepository labelRepository, ValidateLabel validator)
+        private readonly ILabelRepository _labelRepository = new LabelRepository();
+        private ValidateLabel _validator = new();
+        public LabelService()
         {
-            _labelRepository = labelRepository;
-            _validator = validator;
-
         }
 
         /// <summary>

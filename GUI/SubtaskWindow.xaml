@@ -4,9 +4,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
-        mc:Ignorable="d"
-        Title="SubtaskWindow" Height="450" Width="800">
+        mc:Ignorable="d" Loaded="Window_Loaded"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Height="600" Width="400">
     <Grid>
-        
+        <Border Style="{StaticResource ImgClose}" Panel.ZIndex="1" x:Name="CloseBtn" MouseUp="CloseBtn_MouseUp">
+            <Image Source="/Assets/close.png"  Width="24" Height="24"/>
+        </Border>
+        <Border CornerRadius="10" Background="#f6f8fa" Padding="10 40 10 10">
+            <StackPanel>
+                <Image Source="/Assets/todo_list.png" Width="32" Height="32" HorizontalAlignment="Left"/>
+                <TextBlock Text="adadadad" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap"/>
+                <Grid Height="100" Width="320" Margin="0 12 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                        <Image Source="/Assets/pending.png" Height="20" Width="20" Margin="0 0 4 0"/>
+                        <TextBlock Text="Status" Style="{StaticResource  SubText}" FontSize="14"/>
+                    </StackPanel>
+                    <StackPanel VerticalAlignment="Center" Grid.Row="1" Orientation="Horizontal">
+                        <Image Source="/Assets/calendar.png" Height="20" Width="20" Margin="0 0 4 0"/>
+                        <TextBlock Text="Start time" Style="{StaticResource  SubText}" FontSize="14"/>
+                    </StackPanel>
+                    <StackPanel VerticalAlignment="Center" Grid.Row="2" Orientation="Horizontal">
+                        <Image Source="/Assets/calendar.png" Height="20" Width="20" Margin="0 0 4 0"/>
+                        <TextBlock Text="End time" Style="{StaticResource  SubText}" FontSize="14"/>
+                    </StackPanel>
+                    
+                    
+                </Grid>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

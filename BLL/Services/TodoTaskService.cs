@@ -3,18 +3,17 @@ using DAL.Interfaces;
 using Models.DTOs;
 using Models.Entities;
 using BLL.Utilities.Validators;
+using DAL.Repositories;
 
 namespace BLL.Services
 {
     public class TodoTaskService : ITodoTaskService
     {
-        private readonly ITodoTaskRepository _todoTaskRepository;
-        private readonly ValidateTodoTask _validator;
+        private readonly ITodoTaskRepository _todoTaskRepository = new TodoTaskRepository();
+        private readonly ValidateTodoTask _validator = new();
 
-        public TodoTaskService(ITodoTaskRepository todoTaskRepository, ValidateTodoTask validator)
+        public TodoTaskService()
         {
-            _todoTaskRepository = todoTaskRepository;
-            _validator = validator;
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using BLL.Interfaces;
+using BLL.Services;
 using Models.DTOs;
 using Models.Entities;
 using static BLL.Utilities.Validators.ValidateDataType;
@@ -8,12 +9,10 @@ namespace BLL.Utilities.Validators
 {
     public class ValidateTodoTask
     {
-        private readonly ITodoTaskService _todoTaskSer;
-        private readonly ILabelService _labelSer;
-        public ValidateTodoTask(ITodoTaskService todoTaskSer, ILabelService labelSer)
+        private readonly ITodoTaskService _todoTaskSer = new TodoTaskService();
+        private readonly ILabelService _labelSer = new LabelService();
+        public ValidateTodoTask()
         {
-            _todoTaskSer = todoTaskSer;
-            _labelSer = labelSer;
         }
         public async Task<TodoTaskDto> ValidateTaskDto(TodoTaskDto taskDto)
         {

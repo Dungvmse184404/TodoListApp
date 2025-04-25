@@ -1,24 +1,16 @@
 ﻿using Models.DTOs;
 using static BLL.Utilities.Validators.ValidateDataType;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.IdentityModel.Abstractions;
 using BLL.Interfaces;
-using System.Runtime.CompilerServices;
 using Models.Entities;
+using BLL.Services;
 
 namespace BLL.Utilities.Validators
 {
     public class ValidateTask
     {
-        private readonly IDailyTaskService _dailyTaskSer;
-        public ValidateTask(IDailyTaskService dailyTaskSer)
+        private readonly IDailyTaskService _dailyTaskSer = new DailyTaskService();
+        public ValidateTask()
         {
-            _dailyTaskSer = dailyTaskSer;
         }
 
         /// <summary>

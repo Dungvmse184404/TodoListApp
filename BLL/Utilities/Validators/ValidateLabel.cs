@@ -1,12 +1,7 @@
 ﻿using BLL.Interfaces;
+using BLL.Services;
 using Models.DTOs;
 using Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using static BLL.Utilities.Validators.ValidateDataType;
 
 
@@ -14,10 +9,9 @@ namespace BLL.Utilities.Validators
 {
     public class ValidateLabel
     {
-        private readonly ILabelService _labelSer;
-        public ValidateLabel(ILabelService labelSer)
+        private readonly ILabelService _labelSer = new LabelService();
+        public ValidateLabel()
         {
-            _labelSer = labelSer;
         }
         /// <summary>
         /// kiểm tra dữ liệu đầu vào của label

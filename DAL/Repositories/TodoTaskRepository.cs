@@ -13,9 +13,9 @@ namespace DAL.Repositories
     public class TodoTaskRepository : ITodoTaskRepository
     {
         private readonly TodoListAppDbContext _dbContext;
-        public TodoTaskRepository(TodoListAppDbContext dbContext)
+        public TodoTaskRepository()
         {
-            _dbContext = dbContext;
+            _dbContext = new TodoListAppDbContext();
         }
         public async Task<List<TodoTask>> GetAllTodoTasksAsync()
         {

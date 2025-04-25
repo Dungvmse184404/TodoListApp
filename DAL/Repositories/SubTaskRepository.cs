@@ -1,20 +1,16 @@
 ﻿using DAL.Database;
+using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class SubTaskRepository
+    public class SubTaskRepository : ISubTaskRepository
     {
         private readonly TodoListAppDbContext _dbContext;
-        public SubTaskRepository(TodoListAppDbContext dbContext)
+        public SubTaskRepository()
         {
-            _dbContext = dbContext;
+            _dbContext = new TodoListAppDbContext();
         }
 
         public async Task<List<SubTask>> GetAllSubTasksAsync()

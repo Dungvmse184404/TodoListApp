@@ -1,23 +1,16 @@
 ﻿using BLL.Interfaces;
 using Models.DTOs;
 using static BLL.Utilities.Validators.ValidateDataType;
-using Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BLL.Services;
 
 namespace BLL.Utilities.Validators
 {
     public class ValidateSubTask
     {
-        private readonly ITodoTaskService _todoTaskSer;
-        private readonly ISubTaskService _subTaskSer;
-        public ValidateSubTask(ITodoTaskService todoTaskSer, ISubTaskService subTaskSer)
+        private readonly ITodoTaskService _todoTaskSer = new TodoTaskService();
+        private readonly ISubTaskService _subTaskSer = new SubTaskService();
+        public ValidateSubTask()
         {
-            _todoTaskSer = todoTaskSer;
-            _subTaskSer = subTaskSer;
         }
 
         /// <summary>
