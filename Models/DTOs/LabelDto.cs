@@ -12,11 +12,6 @@ namespace Models.DTOs
 
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
-        public DateTime? StartDate { get; set; }
-
-        public DateTime? DueDate { get; set; }
-        public string Status { get; set; }
-
-        
+        public string? Description { get; set; } 
     }
 }

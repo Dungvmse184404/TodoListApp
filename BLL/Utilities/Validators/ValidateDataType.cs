@@ -90,5 +90,21 @@ namespace BLL.Utilities.Validators
                     throw new Exception("Ngày kết thúc không được nhỏ hơn ngày bắt đầu");
             }
         }
+
+        /// <summary>
+        /// kiểm tra format tên Title
+        /// </summary>
+        /// <param name="name"></param>
+        /// <exception cref="Exception"></exception>
+        public static void ValidateTitle(string title)
+        {
+            int maxLength = 50;
+            if (string.IsNullOrWhiteSpace(title))
+                throw new Exception("Title không được để trống");
+            if (title.Length > maxLength)
+                throw new Exception($"Title không được quá {maxLength} ký tự");
+        }
+
+
     }
 }

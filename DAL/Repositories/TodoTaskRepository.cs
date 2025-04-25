@@ -1,4 +1,5 @@
 ﻿using DAL.Database;
+using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class TodoTaskRepository
+    public class TodoTaskRepository : ITodoTaskRepository
     {
         private readonly TodoListAppDbContext _dbContext;
         public TodoTaskRepository(TodoListAppDbContext dbContext)
@@ -41,11 +42,11 @@ namespace DAL.Repositories
                 .FirstOrDefaultAsync(t => t.TodoTaskId == id);
         }
 
-        public async Task<TodoTask?> AddTodoTaskAsync(TodoTask TodoTask)
+        public async Task<TodoTask> AddTodoTaskAsync(TodoTask todoTask)
         {
-            await _dbContext.TodoTasks.AddAsync(TodoTask);
+            _dbContext.TodoTasks.Add(todoTask);
             await _dbContext.SaveChangesAsync();
-            return TodoTask;
+            return todoTask;
         }
 
         public async Task<TodoTask?> DeleteTodoTaskAsync(int id)
@@ -69,11 +70,11 @@ namespace DAL.Repositories
             }
             TodoTask.Title = UpdateTask.Title;
             TodoTask.Description = UpdateTask.Description;
-            TodoTask.IsCompleted = UpdateTask.IsCompleted;
             TodoTask.DueDate = UpdateTask.DueDate;
             TodoTask.CreatedDate = UpdateTask.CreatedDate;
             TodoTask.UpdatedDate = UpdateTask.UpdatedDate;
             TodoTask.LabelId = UpdateTask.LabelId;
+            TodoTask.Status = UpdateTask.Status;
 
             await _dbContext.SaveChangesAsync();
             return TodoTask;

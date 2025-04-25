@@ -23,10 +23,10 @@ namespace TodoListApp.Tests.Utilities
             _mockLabelRepository = new Mock<ILabelRepository>();
             _labelDtos = new List<LabelDto>
             {
-                new LabelDto { LabelName = "Công việc quan trọng", Status = "InProgress" },
-                new LabelDto { LabelName = "Ý tưởng mới", CreateDate = DateTime.Now, StartDate = DateTime.Now.AddDays(-1), Status = "Pending" },
-                new LabelDto { LabelName = "Ý tưởng mới", CreateDate = DateTime.Now, DueDate = DateTime.Now.AddDays(-1), Status = "Pending" },
-                new LabelDto { LabelName = "Việc cá nhân", StartDate = DateTime.Now, DueDate = DateTime.Now.AddDays(3), Status = "Pending" },
+                new LabelDto { LabelName = "Công việc quan trọng" },
+                new LabelDto { LabelName = "Ý tưởng mới", CreateDate = DateTime.Now },
+                new LabelDto { LabelName = "Ý tưởng mới", CreateDate = DateTime.Now },
+                new LabelDto { LabelName = "Việc cá nhân" },
             };
         }
 

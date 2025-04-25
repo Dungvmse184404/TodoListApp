@@ -12,10 +12,6 @@ namespace Models.DTOs
 
         public string? Description { get; set; }
 
-        public bool? IsCompleted { get; set; }
-
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-
         public DateTime? StartDate { get; set; }
 
         public DateTime? DueDate { get; set; }

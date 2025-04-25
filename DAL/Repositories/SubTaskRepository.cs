@@ -63,7 +63,7 @@ namespace DAL.Repositories
             var subTask = await _dbContext.SubTasks.FindAsync(updateSubTask.SubTaskId);
             if (subTask != null)
             {
-                subTask.Title = updateSubTask.Title;
+                subTask.Description = updateSubTask.Description;
                 subTask.IsCompleted = updateSubTask.IsCompleted;
                 subTask.TodoTaskId = updateSubTask.TodoTaskId;
 

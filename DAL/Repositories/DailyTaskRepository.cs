@@ -10,6 +10,7 @@ namespace DAL.Repositories
         private readonly TodoListAppDbContext _dbContext = new();
         public DailyTaskRepository()
         {
+
         }
 
         public async Task<List<DailyTask>> GetAllDailyTasksAsync()
@@ -22,26 +23,22 @@ namespace DAL.Repositories
             return await _dbContext.DailyTasks.FindAsync(id);
         }
 
-        public async Task<DailyTask?> AddDailyTaskAsync(DailyTask dailyTask)
+        public async Task<DailyTask> AddDailyTaskAsync(DailyTask dailyTask)
         {
             await _dbContext.DailyTasks.AddAsync(dailyTask);
             await _dbContext.SaveChangesAsync();
             return dailyTask;
         }
 
-        public async Task<DailyTask?> UpdateDailyTaskAsync(DailyTask dailyTask)
+        public async Task<DailyTask> UpdateDailyTaskAsync(DailyTask dailyTask)
         {
-            var existingDailyTask = await _dbContext.DailyTasks.FindAsync(dailyTask.DailyTasksId);
-            if (existingDailyTask != null)
+            var existingDT = await _dbContext.DailyTasks.FindAsync(dailyTask.DailyTasksId);
+            if (existingDT != null)
             {
-                existingDailyTask.Title = dailyTask.Title;
-                existingDailyTask.IsCompleted = dailyTask.IsCompleted;
-                existingDailyTask.CreatedDate = dailyTask.CreatedDate;
-                existingDailyTask.StartDate = dailyTask.StartDate;
-                existingDailyTask.DueDate = dailyTask.DueDate;
-                existingDailyTask.UpdatedDate = dailyTask.UpdatedDate;
-                existingDailyTask.Description = dailyTask.Description;
-                
+                existingDT.Title = dailyTask.Title;
+                existingDT.StartDate = dailyTask.StartDate;
+                existingDT.DueDate = dailyTask.DueDate;
+                existingDT.Description = dailyTask.Description;
             }
             await _dbContext.SaveChangesAsync();
             return dailyTask;
@@ -57,7 +54,10 @@ namespace DAL.Repositories
             }
             return dailyTask;
         }
-        
 
+        public async Task<DailyTask?> GetDailyTaskByTitle(string title)
+        {
+            return await _dbContext.DailyTasks.FirstOrDefaultAsync(x => x.Title == title);
+        }
     }
 }

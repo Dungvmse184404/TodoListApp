@@ -9,13 +9,9 @@ public partial class Label
 
     public string LabelName { get; set; } = null!;
 
+    public string? Description { get; set; }
+
     public DateTime? CreatedDate { get; set; }
-
-    public DateTime? StartDate { get; set; }
-
-    public DateTime? DueDate { get; set; }
-
-    public string Status { get; set; } = null!;
 
     public virtual ICollection<TodoTask> TodoTasks { get; set; } = new List<TodoTask>();
 }
