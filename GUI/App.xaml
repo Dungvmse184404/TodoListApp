@@ -60,5 +60,23 @@
             <Setter Property="BorderBrush" Value="#e6e8ea" />
             <Setter Property="Padding" Value="4" />
         </Style>
+
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Background" Value="#F7E1D7" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="4 4" />
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="4" Padding="4" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

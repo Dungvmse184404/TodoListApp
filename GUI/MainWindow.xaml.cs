@@ -33,21 +33,7 @@ namespace GUI
 
         private async void LoadTodoTasks()
         {
-            _todoTaskService = new TodoTaskService();
-            var todoList = await _todoTaskService.GetAllTodoTasksAsync();
-            var todoDict = new Dictionary<Label, List<TodoTask>>();
-            foreach (var todo in todoList)
-            {
-                if (todo.Label != null && !todoDict.ContainsKey(todo.Label))
-                {
-                    todoDict.Add(todo.Label, new List<TodoTask>());
-                    todoDict[todo.Label].Add(todo);
-                } else if (todo.Label != null)
-                {
-                    todoDict[todo.Label].Add(todo);
-                }
-            }
-            ListTasks.ItemsSource = todoDict;
+            
         }
 
         private void CreateTaskBox()
