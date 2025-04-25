@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
 using BLL.Utilities.Validators;
 using DAL.Interfaces;
 using DAL.Repositories;
@@ -16,10 +15,14 @@ namespace BLL.Services
     public class DailyTaskService : IDailyTaskService
     {
         private readonly IDailyTaskRepository _dailyTaskRepository;
-        public DailyTaskService()
+        private readonly ValidateTask _validateTask;
+
+        public DailyTaskService(IDailyTaskRepository dailyTaskRepository, ValidateTask validateTask)
         {
-            _dailyTaskRepository = new DailyTaskRepository();
+            _dailyTaskRepository = dailyTaskRepository;
+            _validateTask = validateTask;
         }
+
 
         /// <summary>
         /// Thêm mới 1 DailyTask
@@ -29,7 +32,7 @@ namespace BLL.Services
         /// <exception cref="NotImplementedException"></exception>
         public async Task<DailyTask> AddDailyTaskAsync(DailyTaskDto dailyTask)
         {
-            var taskDto = await ValidateTask.ValidateTaskDto(dailyTask);
+            var taskDto =  _validateTask.ValidateTaskDto(dailyTask);
             var task = new DailyTask
             {
                 Title = taskDto.Title,
@@ -83,17 +86,16 @@ namespace BLL.Services
         /// <param name="dailyTask"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<DailyTask?> UpdateDailyTaskAsync(DailyTask dailyTask)
+        public async Task<DailyTask?> UpdateDailyTaskAsync(DailyTaskDto dailyTaskDto, int Id)
         {
-            var dailyTaskDto = new DailyTaskDto() {
-                DueDate = dailyTask.DueDate,
-                StartDate = dailyTask.StartDate,
-                Description = dailyTask.Description,
-                Title = dailyTask.Title
-            };
-            await ValidateTask.ValidateTaskDto(dailyTaskDto);
+            var taskDto = await _validateTask.ValidateUpdateDailyTask(dailyTaskDto, Id);
 
-            return await _dailyTaskRepository.UpdateDailyTaskAsync(dailyTask);
+            taskDto.Title = taskDto.Title;
+            taskDto.Description = taskDto.Description;
+            taskDto.StartDate = taskDto.StartDate;
+            taskDto.DueDate = taskDto.DueDate;
+            
+            return await _dailyTaskRepository.UpdateDailyTaskAsync(taskDto);
         }
     }
 }

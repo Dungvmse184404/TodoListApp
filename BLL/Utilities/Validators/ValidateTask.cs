@@ -7,37 +7,55 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.IdentityModel.Abstractions;
+using BLL.Interfaces;
+using System.Runtime.CompilerServices;
+using Models.Entities;
 
 namespace BLL.Utilities.Validators
 {
     public class ValidateTask
     {
+        private readonly IDailyTaskService _dailyTaskSer;
+        public ValidateTask(IDailyTaskService dailyTaskSer)
+        {
+            _dailyTaskSer = dailyTaskSer;
+        }
+
         /// <summary>
         /// kiểm tra dữ liệu đầu vào của Task
         /// </summary>
         /// <param name="labelDto"></param>
         /// <returns></returns>
-        public static Task<DailyTaskDto> ValidateTaskDto(DailyTaskDto taskDto)
+        public DailyTaskDto ValidateTaskDto(DailyTaskDto taskDto)
         {
             ValidateTitle(taskDto.Title);
 
             if (taskDto.Description != null)
-                ValidateDescription(taskDto.Description);
+                ValidateDescription(taskDto.Description, 200);
+
+
 
             ValidateDate(ValidateDateFormat(taskDto.StartDate),
                          ValidateDateFormat(taskDto.DueDate),
                          ValidateDateFormat(DateTime.Now));
 
-            return Task.FromResult(taskDto);
+            return taskDto;
         }
 
 
-        private static void ValidateDescription(string descript)
+        public async Task<DailyTask> ValidateUpdateDailyTask(DailyTaskDto taskDto, int taskId)
         {
-            int maxLength = 200;
-            if (descript.Length > maxLength && descript != null)
-                throw new Exception($"Tên Task không được quá {maxLength} ký tự");
+            var dailyTask = await _dailyTaskSer.GetDailyTaskByIdAsync(taskId);
+            if (dailyTask == null)
+            {
+                throw new Exception("Task không tồn tại");
+            }
+            ValidateTaskDto(taskDto);
+
+            return dailyTask;
+
         }
+
     }
-        
+
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
 using BLL.Utilities.Validators;
 using DAL.Interfaces;
 using Models.DTOs;
@@ -16,9 +15,11 @@ namespace BLL.Services
     public class LabelService : ILabelService
     {
         private readonly ILabelRepository _labelRepository;
-        public LabelService(ILabelRepository labelRepository)
+        private ValidateLabel _validator;
+        public LabelService(ILabelRepository labelRepository, ValidateLabel validator)
         {
             _labelRepository = labelRepository;
+            _validator = validator;
 
         }
 
@@ -29,7 +30,7 @@ namespace BLL.Services
         /// <returns></returns>
         public async Task<Label> AddLabelAsync(LabelDto newLabel)
         {
-            var labelDto = await ValidateLabel.ValidatelabelDto(newLabel);
+            var labelDto = _validator.ValidatelabelDto(newLabel);
             var label = new Label
             {
                 LabelName = labelDto.LabelName,
@@ -72,14 +73,11 @@ namespace BLL.Services
         /// </summary>
         /// <param name="label"></param>
         /// <returns></returns>
-        public async Task<Label> UpdateLabelAsync(Label label)
+        public async Task<Label> UpdateLabelAsync(LabelDto labelDto, int Id)
         {
-            var labelDto = new LabelDto
-            {
-                LabelName = label.LabelName,
-                Description = label.Description,
-            };
-            await ValidateLabel.ValidatelabelDto(labelDto);
+            var label = await _validator.ValidateUpdateLabelDto(labelDto, Id);
+            label.LabelName = labelDto.LabelName;
+            label.Description = labelDto.Description;
 
             return await _labelRepository.UpdateLabelAsync(label);
         }

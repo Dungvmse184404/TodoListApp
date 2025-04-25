@@ -1,4 +1,5 @@
 ﻿using BLL.Services;
+using BLL.Utilities.Validators;
 using DAL.Interfaces;
 using Models.Entities;
 using Moq;
@@ -12,13 +13,14 @@ namespace TodoListApp.Tests.BLL.Services
     public class LabelServiceTests
     {
         private readonly Mock<ILabelRepository> _mockLabelRepository;
+        private readonly ValidateLabel _validateLabel;
         private readonly LabelService _labelService;
         private readonly List<Label> _labels;
 
         public LabelServiceTests()
         {
             _mockLabelRepository = new Mock<ILabelRepository>();
-            _labelService = new LabelService(_mockLabelRepository.Object);
+            _labelService = new LabelService(_mockLabelRepository.Object, _validateLabel);
             _labels = new List<Label>
             {
                 new Label { LabelId = 1, LabelName = "Công việc quan trọng" },

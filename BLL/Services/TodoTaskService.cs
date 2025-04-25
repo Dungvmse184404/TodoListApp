@@ -1,46 +1,92 @@
 ﻿using BLL.Interfaces;
 using DAL.Interfaces;
+using Models.DTOs;
 using Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BLL.Utilities.Validators;
 
 namespace BLL.Services
 {
     public class TodoTaskService : ITodoTaskService
     {
         private readonly ITodoTaskRepository _todoTaskRepository;
+        private readonly ValidateTodoTask _validator;
 
-        public TodoTaskService(ITodoTaskRepository todoTaskRepository)
+        public TodoTaskService(ITodoTaskRepository todoTaskRepository, ValidateTodoTask validator)
         {
             _todoTaskRepository = todoTaskRepository;
+            _validator = validator;
         }
 
-        public Task<TodoTask> AddTodoTaskAsync(TodoTask todoTask)
+        /// <summary>
+        /// Thêm mới 1 TodoTask
+        /// </summary>
+        /// <param name="todoTask"></param>
+        /// <returns></returns>
+        public async Task<TodoTask> AddTodoTaskAsync(TodoTaskDto todoTask)
         {
-            throw new NotImplementedException();
+            var todoTaskDto = await _validator.ValidateTaskDto(todoTask);
+
+            var addTask = new TodoTask()
+            {
+                Title = todoTaskDto.Title,
+                Description = todoTaskDto.Description,
+                StartDate = todoTaskDto.StartDate,
+                DueDate = todoTaskDto.DueDate,
+                CreatedDate = todoTaskDto.CreatedDate,
+                Status = todoTaskDto.Status,
+                LabelId = todoTaskDto.LabelId
+            };
+            return await _todoTaskRepository.AddTodoTaskAsync(addTask);
         }
 
+        /// <summary>
+        /// Xóa 1 TodoTask
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<TodoTask> DeleteTodoTaskAsync(int id)
         {
             return await _todoTaskRepository.DeleteTodoTaskAsync(id);
         }
 
+        /// <summary>
+        /// Lấy tất cả TodoTask
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<TodoTask>> GetAllTodoTasksAsync()
         {
             return await _todoTaskRepository.GetAllTodoTasksAsync();
         }
 
+        /// <summary>
+        /// Lấy TodoTask theo Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<TodoTask> GetTodoTaskByIdAsync(int id)
         {
             return await _todoTaskRepository.GetTodoTaskByIdAsync(id);
         }
 
-        public Task<TodoTask> UpdateTodoTaskAsync(TodoTask todoTask)
+        /// <summary>
+        /// Cập nhật TodoTask
+        /// </summary>
+        /// <param name="todoTask"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<TodoTask> UpdateTodoTaskAsync(TodoTaskDto todoTask, int Id)
         {
-            throw new NotImplementedException();
+            var todoTaskDto = await _validator.ValidateUpdateTodoTaskDto(todoTask, Id);
+            var updateTask = new TodoTask()
+            {
+                Title = todoTaskDto.Title,
+                Description = todoTaskDto.Description,
+                StartDate = todoTaskDto.StartDate,
+                DueDate = todoTaskDto.DueDate,
+                Status = todoTaskDto.Status,
+                LabelId = todoTaskDto.LabelId
+            };
+            return await _todoTaskRepository.UpdateTodoTaskAsync(updateTask);
         }
     }
 }

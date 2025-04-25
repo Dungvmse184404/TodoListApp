@@ -99,12 +99,16 @@ namespace BLL.Utilities.Validators
         public static void ValidateTitle(string title)
         {
             int maxLength = 50;
-            if (string.IsNullOrWhiteSpace(title))
-                throw new Exception("Title không được để trống");
+            ValidateInput(title, "Title không được để trống");
+
             if (title.Length > maxLength)
                 throw new Exception($"Title không được quá {maxLength} ký tự");
         }
 
-
+        public static void ValidateDescription(string description, int maxLength)
+        {
+            if (description.Length > maxLength && description != null)
+                throw new Exception($"description không được quá {maxLength} ký tự");
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Models.DTOs;
+﻿using BLL.Interfaces;
+using Models.DTOs;
 using Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,17 +14,31 @@ namespace BLL.Utilities.Validators
 {
     public class ValidateLabel
     {
+        private readonly ILabelService _labelSer;
+        public ValidateLabel(ILabelService labelSer)
+        {
+            _labelSer = labelSer;
+        }
         /// <summary>
         /// kiểm tra dữ liệu đầu vào của label
         /// </summary>
         /// <param name="labelDto"></param>
         /// <returns></returns>
-        public static Task<LabelDto> ValidatelabelDto(LabelDto labelDto)
+        public LabelDto ValidatelabelDto(LabelDto labelDto)
         {
             ValidateTitle(labelDto.LabelName);
-            return Task.FromResult(labelDto);
+            return labelDto;
         }
 
-
+        public async Task<Label> ValidateUpdateLabelDto(LabelDto labelDto, int Id)
+        {
+            var label = await _labelSer.GetLabelByIdAsync(Id);
+            if (label == null)
+            {
+                throw new Exception("Label không tồn tại");
+            }
+            ValidatelabelDto(labelDto);
+            return label;
+        }
     }
 }

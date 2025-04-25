@@ -14,7 +14,7 @@ namespace BLL.Interfaces
         Task<List<DailyTask>> GetAllDailyTasksAsync(DateTime fromDate, DateTime toDate);
         Task<DailyTask?> GetDailyTaskByIdAsync(int id);
         Task<DailyTask> AddDailyTaskAsync(DailyTaskDto dailyTask);
-        Task<DailyTask?> UpdateDailyTaskAsync(DailyTask dailyTask);
+        Task<DailyTask?> UpdateDailyTaskAsync(DailyTaskDto dailyTask, int Id);
         Task<DailyTask?> DeleteDailyTaskAsync(int id);
     }
 }
