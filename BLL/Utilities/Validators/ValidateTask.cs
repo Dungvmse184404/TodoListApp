@@ -19,26 +19,16 @@ namespace BLL.Utilities.Validators
         /// <returns></returns>
         public static Task<DailyTaskDto> ValidateTaskDto(DailyTaskDto taskDto)
         {
-            ValidateTasklName(taskDto.Title);
+            ValidateTitle(taskDto.Title);
 
             if (taskDto.Description != null)
                 ValidateDescription(taskDto.Description);
 
             ValidateDate(ValidateDateFormat(taskDto.StartDate),
                          ValidateDateFormat(taskDto.DueDate),
-                         ValidateDateFormat(taskDto.CreatedDate));
+                         ValidateDateFormat(DateTime.Now));
 
             return Task.FromResult(taskDto);
-        }
-
-
-        private static void ValidateTasklName(string name)
-        {
-            int maxLength = 50;
-            if (string.IsNullOrWhiteSpace(name))
-                throw new Exception("Tên Task không được để trống");
-            if (name.Length > maxLength)
-                throw new Exception($"Tên Task không được quá {maxLength} ký tự");
         }
 
 

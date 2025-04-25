@@ -66,9 +66,7 @@ namespace DAL.Repositories
             {
                 label.LabelName = UpdateLabel.LabelName;
                 label.CreatedDate = UpdateLabel.CreatedDate;
-                label.StartDate = UpdateLabel.StartDate;
-                label.DueDate = UpdateLabel.DueDate;
-                label.Status = UpdateLabel.Status;
+                label.Description = UpdateLabel.Description;
 
                 await _dbContext.SaveChangesAsync();
             }

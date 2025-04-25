@@ -16,12 +16,11 @@ namespace BLL.Services
     public class LabelService : ILabelService
     {
         private readonly ILabelRepository _labelRepository;
-        private readonly IMapper _mapper;
-        public LabelService(ILabelRepository labelRepository, IMapper mapper)
+        public LabelService(ILabelRepository labelRepository)
         {
             _labelRepository = labelRepository;
-            _mapper = mapper;
-        }   
+
+        }
 
         /// <summary>
         /// thêm mới 1 label
@@ -34,10 +33,7 @@ namespace BLL.Services
             var label = new Label
             {
                 LabelName = labelDto.LabelName,
-                CreatedDate = labelDto.CreateDate,
-                StartDate = labelDto.StartDate,
-                DueDate = labelDto.DueDate,
-                Status = labelDto.Status
+                Description = labelDto.Description,
             };
             return await _labelRepository.AddLabelAsync(label);
         }
@@ -78,7 +74,12 @@ namespace BLL.Services
         /// <returns></returns>
         public async Task<Label> UpdateLabelAsync(Label label)
         {
-            await ValidateLabel.ValidatelabelDto(_mapper.Map<LabelDto>(label));
+            var labelDto = new LabelDto
+            {
+                LabelName = label.LabelName,
+                Description = label.Description,
+            };
+            await ValidateLabel.ValidatelabelDto(labelDto);
 
             return await _labelRepository.UpdateLabelAsync(label);
         }

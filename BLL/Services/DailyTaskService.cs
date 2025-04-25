@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
-using BLL.Mappers;
 using BLL.Utilities.Validators;
 using DAL.Interfaces;
 using DAL.Repositories;
@@ -17,7 +16,6 @@ namespace BLL.Services
     public class DailyTaskService : IDailyTaskService
     {
         private readonly IDailyTaskRepository _dailyTaskRepository;
-        private readonly Mapper _mapper;
         public DailyTaskService()
         {
             _dailyTaskRepository = new DailyTaskRepository();
@@ -36,10 +34,8 @@ namespace BLL.Services
             {
                 Title = taskDto.Title,
                 Description = taskDto.Description,
-                CreatedDate = taskDto.CreatedDate,
                 StartDate = taskDto.StartDate,
                 DueDate = taskDto.DueDate,
-                IsCompleted = taskDto.IsCompleted
             };
             return await _dailyTaskRepository.AddDailyTaskAsync(task);
         }
@@ -89,7 +85,13 @@ namespace BLL.Services
         /// <exception cref="NotImplementedException"></exception>
         public async Task<DailyTask?> UpdateDailyTaskAsync(DailyTask dailyTask)
         {
-            await ValidateTask.ValidateTaskDto(_mapper.Map<DailyTaskDto>(dailyTask));
+            var dailyTaskDto = new DailyTaskDto() {
+                DueDate = dailyTask.DueDate,
+                StartDate = dailyTask.StartDate,
+                Description = dailyTask.Description,
+                Title = dailyTask.Title
+            };
+            await ValidateTask.ValidateTaskDto(dailyTaskDto);
 
             return await _dailyTaskRepository.UpdateDailyTaskAsync(dailyTask);
         }

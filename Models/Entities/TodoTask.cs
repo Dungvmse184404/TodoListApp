@@ -11,11 +11,13 @@ public partial class TodoTask
 
     public string? Description { get; set; }
 
-    public bool? IsCompleted { get; set; }
-
     public DateTime? CreatedDate { get; set; }
 
+    public DateTime? StartDate { get; set; }
+
     public DateTime? DueDate { get; set; }
+
+    public string Status { get; set; } = null!;
 
     public DateTime? UpdatedDate { get; set; }
 
