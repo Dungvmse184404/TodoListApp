@@ -194,32 +194,32 @@
                                                 </Canvas>
                                             </Border>
                                             <Border Background="#f6f8fa" Grid.Column="2" BorderBrush="#e6e8ea">
-                                                <Canvas>
+                                                <Canvas x:Name="TuesdayColumnCanvas">
 
                                                 </Canvas>
                                             </Border>
                                             <Border Background="#f6f8fa" Grid.Column="3" BorderThickness="1 0" BorderBrush="#e6e8ea">
-                                                <Canvas>
+                                                <Canvas x:Name="WednesdayColumnCanvas">
 
                                                 </Canvas>
                                             </Border>
                                             <Border Background="#f6f8fa" Grid.Column="4" BorderBrush="#e6e8ea">
-                                                <Canvas>
+                                                <Canvas x:Name="ThursdayColumnCanvas">
 
                                                 </Canvas>
                                             </Border>
                                             <Border Background="#f6f8fa" Grid.Column="5" BorderThickness="1 0" BorderBrush="#e6e8ea">
-                                                <Canvas>
+                                                <Canvas x:Name="FridayColumnCanvas">
 
                                                 </Canvas>
                                             </Border>
                                             <Border Background="#f6f8fa" Grid.Column="6" BorderBrush="#e6e8ea">
-                                                <Canvas>
+                                                <Canvas x:Name="SaturdayColumnCanvas">
 
                                                 </Canvas>
                                             </Border>
                                             <Border Background="#f6f8fa" Grid.Column="7" BorderThickness="1 0" BorderBrush="#e6e8ea">
-                                                <Canvas>
+                                                <Canvas x:Name="SundayColumnCanvas">
 
                                                 </Canvas>
                                             </Border>

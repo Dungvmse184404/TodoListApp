@@ -7,10 +7,9 @@ namespace DAL.Repositories
 {
     public class DailyTaskRepository : IDailyTaskRepository
     {
-        private readonly TodoListAppDbContext _dbContext;
-        public DailyTaskRepository(TodoListAppDbContext dbContext)
+        private readonly TodoListAppDbContext _dbContext = new();
+        public DailyTaskRepository()
         {
-            _dbContext = dbContext;
         }
 
         public async Task<List<DailyTask>> GetAllDailyTasksAsync()

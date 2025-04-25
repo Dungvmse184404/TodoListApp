@@ -29,6 +29,7 @@ public partial class TodoListAppDbContext : DbContext
     {
         optionsBuilder.UseSqlServer(GetConnectionString());
     }
+
     private string GetConnectionString()
     {
         IConfiguration config = new ConfigurationBuilder()

@@ -15,6 +15,7 @@ namespace GUI
         private DispatcherTimer _timer = new();
         private DateTime _currentTime = DateTime.Now;
         private TodoTaskService _todoTaskService;
+        private DailyTaskService _dailyTaskService = new DailyTaskService();
 
         public MainWindow()
         {
@@ -28,14 +29,57 @@ namespace GUI
             _timer.Tick += TimeTracker_Tick;
             RealTime_Clock();
             LoadDayInWeek(_currentTime);
+            LoadDailyTasksForWeek(_currentTime);    
         }
 
-        private void LoadDailyTasks()
+        private async void LoadDailyTasksForWeek(DateTime date)
         {
+            DateTime monday = date.AddDays(-((int)date.DayOfWeek - 1));
 
+            var list = await _dailyTaskService.GetAllDailyTasksAsync(monday, monday.Add(TimeSpan.FromDays(6)));
+
+            LoadDailyTasks(list, date);
         }
 
-        private void CreateTaskBox(DailyTask dailyTask)
+        private void LoadDailyTasks(List<DailyTask> dailyTasks, DateTime date)
+        {
+            DateTime monday = date.AddDays(-((int)date.DayOfWeek - 1));
+
+            foreach (DailyTask task in dailyTasks)
+            {
+                var border = CreateTaskBox(task);
+                if (task.StartDate.Value.Date == monday.Date)
+                {
+                    MondayColumnCanvas.Children.Add(border);
+                }
+                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(1)))
+                {
+                    TuesdayColumnCanvas.Children.Add(border);
+                }
+                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(2)))
+                {
+                    WednesdayColumnCanvas.Children.Add(border);
+                }
+                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(3)))
+                {
+                    ThursdayColumnCanvas.Children.Add(border);
+                }
+                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(4)))
+                {
+                    FridayColumnCanvas.Children.Add(border);
+                }
+                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(5)))
+                {
+                    SaturdayColumnCanvas.Children.Add(border);
+                }
+                else if (task.StartDate.Value.Date == monday.Add(TimeSpan.FromDays(6)))
+                {
+                    SundayColumnCanvas.Children.Add(border);
+                }
+            }
+        }
+
+        private Border CreateTaskBox(DailyTask dailyTask)
         {
             Border border = new Border()
             {
@@ -47,7 +91,6 @@ namespace GUI
             grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             grid.RowDefinitions.Add(new RowDefinition());
             grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-
             TextBlock startTime = new TextBlock()
             {
                 Text = $"{dailyTask.StartDate.Value:HH:mm}",
@@ -68,6 +111,24 @@ namespace GUI
                 Margin = new Thickness(0, 5, 0, 5)
             };
 
+            StackPanel desc = new StackPanel();
+            TextBlock textBlock = new TextBlock()
+            {
+                Text = "Description",
+                Style = (Style)Application.Current.FindResource("NormalText"),
+                FontWeight = FontWeights.Bold
+            };
+            TextBlock descDetail = new TextBlock()
+            {
+                Text = dailyTask.Description,
+                Style = (Style)Application.Current.FindResource("NormalText"),
+                Margin = new Thickness(0, 10, 0, 10)
+            };
+            desc.Children.Add(textBlock);
+            desc.Children.Add(descDetail);
+
+            border.ToolTip = desc;
+
             Grid.SetRow(startTime, 0);
             Grid.SetRow(title, 1);
             Grid.SetRow(endTime, 2);
@@ -76,15 +137,16 @@ namespace GUI
             grid.Children.Add(endTime);
 
             Canvas.SetLeft(border, 4);
-            Canvas.SetTop(border, CalculateTaskBoxPosition());
+            Canvas.SetTop(border, CalculateTaskBoxPosition(dailyTask.StartDate.Value));
 
             border.Child = grid;
-            MondayColumnCanvas.Children.Add(border);
+
+            return border;
         }
 
-        private double CalculateTaskBoxPosition()
+        private double CalculateTaskBoxPosition(DateTime time)
         {
-            TimeSpan currentTime = DateTime.Now.TimeOfDay;
+            TimeSpan currentTime = time.TimeOfDay;
             TimeSpan totalDay = TimeSpan.FromHours(24);
             double ratio = currentTime.TotalSeconds / totalDay.TotalSeconds;
 
@@ -95,24 +157,28 @@ namespace GUI
         {
             _currentTime = _currentTime.Add(TimeSpan.FromDays(-7));
             LoadDayInWeek(_currentTime);
+            LoadDailyTasksForWeek(_currentTime);
         }
 
         private void ForwardWeekBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _currentTime = _currentTime.Add(TimeSpan.FromDays(7));
             LoadDayInWeek(_currentTime);
+            LoadDailyTasksForWeek(_currentTime);
         }
 
         private void BackMonthBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _currentTime = _currentTime.Add(TimeSpan.FromDays(-30));
             LoadDayInWeek(_currentTime);
+            LoadDailyTasksForWeek(_currentTime);
         }
 
         private void ForwardMonthBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             _currentTime = _currentTime.Add(TimeSpan.FromDays(30));
             LoadDayInWeek(_currentTime);
+            LoadDailyTasksForWeek(_currentTime);
         }
 
         private void LoadDayInWeek(DateTime date)

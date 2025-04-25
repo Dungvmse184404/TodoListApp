@@ -11,6 +11,7 @@ namespace BLL.Interfaces
     public interface IDailyTaskService
     {
         Task<List<DailyTask>> GetAllDailyTasksAsync();
+        Task<List<DailyTask>> GetAllDailyTasksAsync(DateTime fromDate, DateTime toDate);
         Task<DailyTask?> GetDailyTaskByIdAsync(int id);
         Task<DailyTask> AddDailyTaskAsync(DailyTaskDto dailyTask);
         Task<DailyTask?> UpdateDailyTaskAsync(DailyTask dailyTask);

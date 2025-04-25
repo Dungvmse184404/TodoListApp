@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
+using BLL.Mappers;
 using BLL.Utilities.Validators;
 using DAL.Interfaces;
+using DAL.Repositories;
 using Models.DTOs;
 using Models.Entities;
 using System;
@@ -15,11 +17,10 @@ namespace BLL.Services
     public class DailyTaskService : IDailyTaskService
     {
         private readonly IDailyTaskRepository _dailyTaskRepository;
-        private readonly IMapper _mapper;
-        public DailyTaskService(IDailyTaskRepository dailyTaskRepository, IMapper mapper)
+        private readonly Mapper _mapper;
+        public DailyTaskService()
         {
-            _dailyTaskRepository = dailyTaskRepository;
-            _mapper = mapper;
+            _dailyTaskRepository = new DailyTaskRepository();
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace BLL.Services
         /// <exception cref="NotImplementedException"></exception>
         public async Task<DailyTask?> DeleteDailyTaskAsync(int id)
         {
-             return await _dailyTaskRepository.DeleteDailyTaskAsync(id);
+            return await _dailyTaskRepository.DeleteDailyTaskAsync(id);
         }
 
         /// <summary>
@@ -62,6 +63,11 @@ namespace BLL.Services
         public async Task<List<DailyTask>> GetAllDailyTasksAsync()
         {
             return await _dailyTaskRepository.GetAllDailyTasksAsync();
+        }
+
+        public async Task<List<DailyTask>> GetAllDailyTasksAsync(DateTime fromDate, DateTime toDate)
+        {
+            return (await _dailyTaskRepository.GetAllDailyTasksAsync()).Where(x => x.StartDate.Value.Date >= fromDate.Date && x.DueDate.Value.Date <= toDate.Date).ToList();
         }
 
         /// <summary>
