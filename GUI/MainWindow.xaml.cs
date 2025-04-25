@@ -281,5 +281,11 @@ namespace GUI
         {
             this.WindowState = WindowState.Minimized;
         }
+
+        private void AddDailyTaskBtn_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            DailyTaskDetailWindow dailyTaskDetailWindow = new DailyTaskDetailWindow();  
+            dailyTaskDetailWindow.ShowDialog();
+        }
     }
 }

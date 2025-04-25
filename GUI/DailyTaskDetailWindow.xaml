@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent" 
          Height="400" Width="600">
     <Grid>
         <Border Style="{StaticResource ImgClose}" Panel.ZIndex="1" x:Name="CloseBtn" MouseUp="CloseBtn_MouseUp">
             <Image Source="/Assets/close.png"  Width="24" Height="24"/>
         </Border>
 
-        <Border CornerRadius="10" Background="#f6f8fa" Padding="10 40 10 10">
+        <Border CornerRadius="10" Background="#f6f8fa" BorderThickness="1" BorderBrush="Black" Padding="10 40 10 10">
             <Canvas>
                 <Label Content="Title" />
                 <TextBox x:Name="TitleInput" Canvas.Left="98" Canvas.Top="7" HorizontalAlignment="Left" VerticalAlignment="Center" Width="424"/>
