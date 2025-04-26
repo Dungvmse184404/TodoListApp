@@ -7,18 +7,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Interfaces;
+using DAL.Repositories;
 
 namespace BLL.Utilities.Validators
 {
     public class ValidateSubTask
     {
-        private readonly ITodoTaskService _todoTaskSer;
-        private readonly ISubTaskService _subTaskSer;
-        public ValidateSubTask(ITodoTaskService todoTaskSer, ISubTaskService subTaskSer)
+        private readonly ITodoTaskRepository _todoTaskRepo;
+        private readonly ISubTaskRepository _subTaskRepo;
+
+        public ValidateSubTask(ITodoTaskRepository todoTaskRepo, ISubTaskRepository subTaskRepo)
         {
-            _todoTaskSer = todoTaskSer;
-            _subTaskSer = subTaskSer;
+            _todoTaskRepo = todoTaskRepo;
+            _subTaskRepo = subTaskRepo;
         }
+
 
         /// <summary>
         /// kiểm tra các field AddSubTask
@@ -56,7 +60,7 @@ namespace BLL.Utilities.Validators
 
         public async Task FindTodoTask(int todoTaskId)
         {
-            var todoTask = await _todoTaskSer.GetTodoTaskByIdAsync(todoTaskId);
+            var todoTask = await _todoTaskRepo.GetTodoTaskByIdAsync(todoTaskId);
             if (todoTask == null)
             {
                 throw new Exception("Task không tồn tại");
@@ -66,7 +70,7 @@ namespace BLL.Utilities.Validators
 
         public async Task FindSubTask(int subTaskId)
         {
-            var subTask = await _todoTaskSer.GetTodoTaskByIdAsync(subTaskId);
+            var subTask = await _subTaskRepo.GetSubTaskByIdAsync(subTaskId);
             if (subTask == null)
             {
                 throw new Exception("SubTask không tồn tại");

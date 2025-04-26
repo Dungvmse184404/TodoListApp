@@ -10,16 +10,19 @@ using Microsoft.IdentityModel.Abstractions;
 using BLL.Interfaces;
 using System.Runtime.CompilerServices;
 using Models.Entities;
+using DAL.Interfaces;
 
 namespace BLL.Utilities.Validators
 {
     public class ValidateTask
     {
-        private readonly IDailyTaskService _dailyTaskSer;
-        public ValidateTask(IDailyTaskService dailyTaskSer)
+        private readonly IDailyTaskRepository _dailyTaskRepo;
+
+        public ValidateTask(IDailyTaskRepository dailyTaskRepo)
         {
-            _dailyTaskSer = dailyTaskSer;
+            _dailyTaskRepo = dailyTaskRepo;
         }
+
 
         /// <summary>
         /// kiểm tra dữ liệu đầu vào của Task
@@ -45,7 +48,7 @@ namespace BLL.Utilities.Validators
 
         public async Task<DailyTask> ValidateUpdateDailyTask(DailyTaskDto taskDto, int taskId)
         {
-            var dailyTask = await _dailyTaskSer.GetDailyTaskByIdAsync(taskId);
+            var dailyTask = await _dailyTaskRepo.GetDailyTaskByIdAsync(taskId);
             if (dailyTask == null)
             {
                 throw new Exception("Task không tồn tại");

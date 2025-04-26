@@ -1,4 +1,5 @@
 ﻿using BLL.Interfaces;
+using DAL.Interfaces;
 using Models.DTOs;
 using Models.Entities;
 using System;
@@ -14,11 +15,13 @@ namespace BLL.Utilities.Validators
 {
     public class ValidateLabel
     {
-        private readonly ILabelService _labelSer;
-        public ValidateLabel(ILabelService labelSer)
+        private readonly ILabelRepository _labelRepo;
+
+        public ValidateLabel(ILabelRepository labelRepo)
         {
-            _labelSer = labelSer;
+            _labelRepo = labelRepo;
         }
+
         /// <summary>
         /// kiểm tra dữ liệu đầu vào của label
         /// </summary>
@@ -32,7 +35,7 @@ namespace BLL.Utilities.Validators
 
         public async Task<Label> ValidateUpdateLabelDto(LabelDto labelDto, int Id)
         {
-            var label = await _labelSer.GetLabelByIdAsync(Id);
+            var label = await _labelRepo.GetLabelByIdAsync(Id);
             if (label == null)
             {
                 throw new Exception("Label không tồn tại");
