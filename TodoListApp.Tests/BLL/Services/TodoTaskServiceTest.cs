@@ -26,11 +26,31 @@ namespace TodoListApp.Tests.BLL.Services
 
         public TodoTaskServiceTest()
         {
-            //var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
-            // .UseSqlServer("Server=(local); Database=TodoListAppDB; Trusted_Connection=True; TrustServerCertificate=True; id=sa; pwd=12345;")
-            // .Options;
-
-            _dbContext = new TodoListAppDbContext();
+            var connectionString = "Server=(local); Database=TodoListAppDBTest; Trusted_Connection=True; TrustServerCertificate=True; uid=sa; pwd=12345;";
+            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
+                .UseSqlServer(connectionString)
+                .Options;
+            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
+                .UseSqlServer(connectionString)
+                .Options;
+            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
+                .UseSqlServer(connectionString)
+                .Options;
+            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
+                .UseSqlServer(connectionString)
+                .Options;
+            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
+                .UseSqlServer(connectionString)
+                .Options;
+            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
+                .UseSqlServer(connectionString)
+                .Options;
+            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
+                .UseSqlServer(connectionString)
+                .Options;
+            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
+                .UseSqlServer(connectionString)
+                .Options;
 
             _mockTodoTaskRepository = new Mock<ITodoTaskRepository>();
             _mockLabelRepository = new Mock<ILabelRepository>();
