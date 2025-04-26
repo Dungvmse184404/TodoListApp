@@ -22,7 +22,7 @@ namespace BLL.Utilities.Validators
 
             status = status.Trim();
 
-            if (Enum.TryParse<LabelStatus>(status, ignoreCase: true, out var result))
+            if (Enum.TryParse<Status>(status, ignoreCase: true, out var result))
             {
                 return result.ToString();
             }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Models.Entities;
 
 namespace DAL.Database;
 
@@ -27,7 +27,10 @@ public partial class TodoListAppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(GetConnectionString());
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(GetConnectionString());
+        }
     }
 
     private string GetConnectionString()
@@ -45,7 +48,7 @@ public partial class TodoListAppDbContext : DbContext
     {
         modelBuilder.Entity<DailyTask>(entity =>
         {
-            entity.HasKey(e => e.DailyTasksId).HasName("PK__DailyTas__7C41DA0D73273CB6");
+            entity.HasKey(e => e.DailyTasksId).HasName("PK__DailyTas__7C41DA0DAC15C028");
 
             entity.Property(e => e.DailyTasksId).HasColumnName("DailyTasksID");
             entity.Property(e => e.DueDate).HasColumnType("datetime");
@@ -55,7 +58,7 @@ public partial class TodoListAppDbContext : DbContext
 
         modelBuilder.Entity<Label>(entity =>
         {
-            entity.HasKey(e => e.LabelId).HasName("PK__Labels__397E2BA3F77B5EA5");
+            entity.HasKey(e => e.LabelId).HasName("PK__Labels__397E2BA398FE3ABF");
 
             entity.Property(e => e.LabelId).HasColumnName("LabelID");
             entity.Property(e => e.CreatedDate)
@@ -66,10 +69,9 @@ public partial class TodoListAppDbContext : DbContext
 
         modelBuilder.Entity<SubTask>(entity =>
         {
-            entity.HasKey(e => e.SubTaskId).HasName("PK__SubTasks__869FF1A211B45665");
+            entity.HasKey(e => e.SubTaskId).HasName("PK__SubTasks__869FF1A2B3AD1F4C");
 
             entity.Property(e => e.SubTaskId).HasColumnName("SubTaskID");
-            entity.Property(e => e.Description).HasMaxLength(200);
             entity.Property(e => e.IsCompleted).HasDefaultValue(false);
             entity.Property(e => e.TodoTaskId).HasColumnName("TodoTaskID");
 
@@ -80,7 +82,7 @@ public partial class TodoListAppDbContext : DbContext
 
         modelBuilder.Entity<TodoTask>(entity =>
         {
-            entity.HasKey(e => e.TodoTaskId).HasName("PK__TodoTask__B9D8134527DB7187");
+            entity.HasKey(e => e.TodoTaskId).HasName("PK__TodoTask__B9D813450FEE1091");
 
             entity.Property(e => e.TodoTaskId).HasColumnName("TodoTaskID");
             entity.Property(e => e.CreatedDate)
@@ -89,7 +91,7 @@ public partial class TodoListAppDbContext : DbContext
             entity.Property(e => e.DueDate).HasColumnType("datetime");
             entity.Property(e => e.LabelId).HasColumnName("LabelID");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
-            entity.Property(e => e.Status).HasMaxLength(200);
+            entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.Title).HasMaxLength(200);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 

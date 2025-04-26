@@ -1,4 +1,5 @@
 ﻿using BLL.Interfaces;
+using DAL.Interfaces;
 using Models.DTOs;
 using Models.Entities;
 using static BLL.Utilities.Validators.ValidateDataType;
@@ -8,12 +9,12 @@ namespace BLL.Utilities.Validators
 {
     public class ValidateTodoTask
     {
-        private readonly ITodoTaskService _todoTaskSer;
-        private readonly ILabelService _labelSer;
-        public ValidateTodoTask(ITodoTaskService todoTaskSer, ILabelService labelSer)
+        private readonly ITodoTaskRepository _todoTaskRepo;
+        private readonly ILabelRepository _labelRepo;
+        public ValidateTodoTask(ITodoTaskRepository todoTaskRepo, ILabelRepository labelRepo)
         {
-            _todoTaskSer = todoTaskSer;
-            _labelSer = labelSer;
+            _todoTaskRepo = todoTaskRepo;
+            _labelRepo = labelRepo;
         }
         public async Task<TodoTaskDto> ValidateTaskDto(TodoTaskDto taskDto)
         {
@@ -34,7 +35,7 @@ namespace BLL.Utilities.Validators
 
         public async Task<TodoTask> ValidateUpdateTodoTaskDto(TodoTaskDto todoTaskDto, int Id)
         {
-            var todoTask = await _todoTaskSer.GetTodoTaskByIdAsync(Id);
+            var todoTask = await _todoTaskRepo.GetTodoTaskByIdAsync(Id);
             if (todoTask == null)
             {
                 throw new Exception("Label không tồn tại");
@@ -46,7 +47,7 @@ namespace BLL.Utilities.Validators
         //--------------------------------------------------------
         public async Task ValidateLabel(int LabelId)
         {
-            var label = await _labelSer.GetLabelByIdAsync(LabelId);
+            var label = await _labelRepo.GetLabelByIdAsync(LabelId);
             if (label == null)
             {
                 throw new Exception("Label không tồn tại");

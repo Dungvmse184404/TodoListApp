@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
+using BLL.Interfaces;
 using BLL.Services;
 using Models.Entities;
 using Label = Models.Entities.Label;
@@ -15,13 +16,18 @@ namespace GUI
         private TimeSpan _currentTimeTracker = TimeSpan.Zero;
         private DispatcherTimer _timer = new();
         private DateTime _currentTime = DateTime.Now;
-        private TodoTaskService _todoTaskService;
-        private DailyTaskService _dailyTaskService = new DailyTaskService();
 
-        public MainWindow()
+
+        private ITodoTaskService _todoTaskService;
+        private IDailyTaskService _dailyTaskService;
+
+        public MainWindow(IDailyTaskService dailyTaskService, ITodoTaskService todoTaskService)
         {
             InitializeComponent();
             UpdateTimeNow();
+
+            _dailyTaskService = dailyTaskService;
+            _todoTaskService = todoTaskService;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models.Message
+namespace TodoListApp.Tests.BLL.Services
 {
-    public enum Status
+    public class DailyTaskServiceTest
     {
-        Waiting,
-        InProgress,
-        Completed,
-        Cancelled
+
+
     }
 }

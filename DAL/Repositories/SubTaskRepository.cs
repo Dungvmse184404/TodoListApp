@@ -1,4 +1,5 @@
 ﻿using DAL.Database;
+using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class SubTaskRepository
+    public class SubTaskRepository : ISubTaskRepository
     {
         private readonly TodoListAppDbContext _dbContext;
         public SubTaskRepository(TodoListAppDbContext dbContext)
