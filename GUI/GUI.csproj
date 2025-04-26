@@ -9,11 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\add.png" />
     <None Remove="Assets\add_circle.png" />
     <None Remove="Assets\arrow_back.png" />
     <None Remove="Assets\arrow_forward.png" />
     <None Remove="Assets\calendar.png" />
+    <None Remove="Assets\check.png" />
     <None Remove="Assets\close.png" />
+    <None Remove="Assets\edit.png" />
     <None Remove="Assets\minimize.png" />
     <None Remove="Assets\pause.png" />
     <None Remove="Assets\pending.png" />
@@ -24,6 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Assets\add.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\add_circle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -58,6 +64,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\todo_list.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\check.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\edit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

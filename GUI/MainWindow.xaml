@@ -304,28 +304,30 @@
                                     </StackPanel>
                                 </Border>
 
-                                <Border  Grid.Row="1" Padding="20">
-                                    <StackPanel Margin="0 0 0 20">
-                                        <TextBlock Text="Label Name" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold"/>
-                                        <TextBlock Text="Long desc" Style="{StaticResource SubText}" TextWrapping="Wrap" FontSize="16" Margin="0 12"/>
+                                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                                    <Border Padding="20">
+                                        <StackPanel Margin="0 0 0 20">
+                                            <TextBlock Text="Label Name" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold"/>
+                                            <TextBlock Text="Long desc" Style="{StaticResource SubText}" TextWrapping="Wrap" FontSize="16" Margin="0 12"/>
 
-                                        <Border Background="Transparent" Margin="20 10 0 0" Padding="4" BorderThickness="1" BorderBrush="Black" CornerRadius="4">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="32"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="100"/>
-                                                </Grid.ColumnDefinitions>
+                                            <Border Background="Transparent" Margin="20 10 0 0" Padding="4" BorderThickness="1" BorderBrush="Black" CornerRadius="4">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="32"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="100"/>
+                                                    </Grid.ColumnDefinitions>
 
-                                                <Image Source="/Assets/todo_list.png" Height="24" Width="24" />
-                                                <TextBlock Text="Todo name" TextWrapping="Wrap" FontSize="16" Margin="8 0 0 0" Grid.Column="1"/>
-                                                <Border Padding="4" CornerRadius="5" Background="#BCF8EC" Grid.Column="2" >
-                                                    <TextBlock Text="In proccess" Style="{StaticResource SubText}" FontSize="12" TextAlignment="Center"/>
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                    </StackPanel>
-                                </Border>
+                                                    <Image Source="/Assets/todo_list.png" Height="24" Width="24" />
+                                                    <TextBlock Text="Todo name" TextWrapping="Wrap" FontSize="16" Margin="8 0 0 0" Grid.Column="1"/>
+                                                    <Border Padding="4" CornerRadius="5" Background="#BCF8EC" Grid.Column="2" >
+                                                        <TextBlock Text="In proccess" Style="{StaticResource SubText}" FontSize="12" TextAlignment="Center"/>
+                                                    </Border>
+                                                </Grid>
+                                            </Border>
+                                        </StackPanel>
+                                    </Border>
+                                </ScrollViewer>
                             </Grid>
                         </Border>
                     </Grid>
