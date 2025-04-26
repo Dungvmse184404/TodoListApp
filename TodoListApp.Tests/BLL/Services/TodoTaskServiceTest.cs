@@ -26,31 +26,13 @@ namespace TodoListApp.Tests.BLL.Services
 
         public TodoTaskServiceTest()
         {
+
             var connectionString = "Server=(local); Database=TodoListAppDBTest; Trusted_Connection=True; TrustServerCertificate=True; uid=sa; pwd=12345;";
             var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
                 .UseSqlServer(connectionString)
                 .Options;
-            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
-                .UseSqlServer(connectionString)
-                .Options;
-            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
-                .UseSqlServer(connectionString)
-                .Options;
-            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
-                .UseSqlServer(connectionString)
-                .Options;
-            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
-                .UseSqlServer(connectionString)
-                .Options;
-            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
-                .UseSqlServer(connectionString)
-                .Options;
-            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
-                .UseSqlServer(connectionString)
-                .Options;
-            var options = new DbContextOptionsBuilder<TodoListAppDbContext>()
-                .UseSqlServer(connectionString)
-                .Options;
+
+            _dbContext = new TodoListAppDbContext(options);
 
             _mockTodoTaskRepository = new Mock<ITodoTaskRepository>();
             _mockLabelRepository = new Mock<ILabelRepository>();
@@ -88,7 +70,7 @@ namespace TodoListApp.Tests.BLL.Services
         [MemberData(nameof(GetTodoTaskDtos))]
         public async Task CreateTodoTask_ShouldAddTaskToDatabase(TodoTaskDto todoTaskDto)
         {
-            //await _todoTaskService.AddTodoTaskAsync(todoTaskDto);
+            await _todoTaskService.AddTodoTaskAsync(todoTaskDto);
 
             var taskInDb = await _dbContext.TodoTasks.FirstOrDefaultAsync(t => t.Title == todoTaskDto.Title);
             Assert.NotNull(taskInDb);
