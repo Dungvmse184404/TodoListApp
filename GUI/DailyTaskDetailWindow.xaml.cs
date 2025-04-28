@@ -1,20 +1,32 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
+using BLL.Interfaces;
 using BLL.Services;
 using Microsoft.IdentityModel.Tokens;
-using Models.DTOs;
 using Models.Entities;
 
 namespace GUI
 {
     public partial class DailyTaskDetailWindow : Window
     {
-        private DailyTaskService _dailyTaskService = new();
+        private IDailyTaskService _dailyTaskService = new DailyTaskService();
+        public DailyTask DailyTask { get; set; } = null;
+
         public DailyTaskDetailWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DailyTask != null)
+            {
+                TitleInput.Text = DailyTask.Title;
+                DescInput.Text = DailyTask.Description;
+                DateInput.SelectedDate = DailyTask.StartDate;
+                StartTime.SelectedTime = DailyTask.StartDate;
+                EndTime.SelectedTime =DailyTask.DueDate;
+            }
         }
 
         private void CloseBtn_MouseUp(object sender, MouseButtonEventArgs e)
@@ -31,7 +43,7 @@ namespace GUI
         {
             if (CheckTitle() && CheckDescription() && CheckDate() && CheckTime())
             {
-                DailyTaskDto dailyTask = new DailyTaskDto()
+                DailyTask dailyTask = new DailyTask()
                 {
                     Title = TitleInput.Text,
                     Description = DescInput.Text,
@@ -40,9 +52,18 @@ namespace GUI
                     DueDate = new DateTime(
                         DateInput.SelectedDate.Value.Year, DateInput.SelectedDate.Value.Month, DateInput.SelectedDate.Value.Day, EndTime.SelectedTime.Value.Hour, EndTime.SelectedTime.Value.Minute, EndTime.SelectedTime.Value.Second),
                 };
-                await _dailyTaskService.AddDailyTaskAsync(dailyTask);
-                MessageBox.Show("Add task successfully !");
-                this.Close();
+                if (DailyTask == null )
+                {
+                    await _dailyTaskService.AddDailyTaskAsync(dailyTask);
+                    MessageBox.Show("Add task successfully !");
+                }
+                else
+                {
+                    dailyTask.DailyTasksId = DailyTask.DailyTasksId;
+                    await _dailyTaskService.UpdateDailyTaskAsync(dailyTask);
+                    MessageBox.Show("Update task successfully !");
+                }
+                    this.Close();
             }
         }
 

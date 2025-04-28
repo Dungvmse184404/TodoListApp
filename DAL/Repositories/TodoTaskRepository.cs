@@ -2,23 +2,16 @@
 using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
     public class TodoTaskRepository : ITodoTaskRepository
     {
-        private readonly TodoListAppDbContext _dbContext;
-        public TodoTaskRepository()
-        {
-            _dbContext = new TodoListAppDbContext();
-        }
+        private TodoListAppDbContext _dbContext = null!;
+
         public async Task<List<TodoTask>> GetAllTodoTasksAsync()
         {
+            _dbContext = new();
             return await _dbContext.TodoTasks
                 .Include(t => t.Label)
                 .Include(t => t.SubTasks)
@@ -27,6 +20,7 @@ namespace DAL.Repositories
 
         public async Task<List<TodoTask>> GetTodoTasksByLabelIdAsync(int labelId)
         {
+            _dbContext = new();
             return await _dbContext.TodoTasks
                 .Where(t => t.LabelId == labelId)
                 .Include(t => t.Label)
@@ -36,6 +30,7 @@ namespace DAL.Repositories
 
         public async Task<TodoTask?> GetTodoTaskByIdAsync(int id)
         {
+            _dbContext = new();
             return await _dbContext.TodoTasks
                 .Include(t => t.Label)
                 .Include(t => t.SubTasks)
@@ -44,6 +39,7 @@ namespace DAL.Repositories
 
         public async Task<TodoTask> AddTodoTaskAsync(TodoTask todoTask)
         {
+            _dbContext = new();
             _dbContext.TodoTasks.Add(todoTask);
             await _dbContext.SaveChangesAsync();
             return todoTask;
@@ -51,6 +47,7 @@ namespace DAL.Repositories
 
         public async Task<TodoTask?> DeleteTodoTaskAsync(int id)
         {
+            _dbContext = new();
             var DeleteTodoTask = await _dbContext.TodoTasks.FindAsync(id);
             if (DeleteTodoTask == null)
             {
@@ -61,23 +58,11 @@ namespace DAL.Repositories
             return DeleteTodoTask;
         }
 
-        public async Task<TodoTask?> UpdateTodoTaskAsync(TodoTask UpdateTask)
+        public async Task UpdateTodoTaskAsync(TodoTask UpdateTask)
         {
-            var TodoTask = await _dbContext.TodoTasks.FindAsync(UpdateTask.TodoTaskId);
-            if (TodoTask == null)
-            {
-                return null;
-            }
-            TodoTask.Title = UpdateTask.Title;
-            TodoTask.Description = UpdateTask.Description;
-            TodoTask.DueDate = UpdateTask.DueDate;
-            TodoTask.CreatedDate = UpdateTask.CreatedDate;
-            TodoTask.UpdatedDate = UpdateTask.UpdatedDate;
-            TodoTask.LabelId = UpdateTask.LabelId;
-            TodoTask.Status = UpdateTask.Status;
-
+            _dbContext = new();
+            _dbContext.TodoTasks.Update(UpdateTask);
             await _dbContext.SaveChangesAsync();
-            return TodoTask;
         }
     }
 }

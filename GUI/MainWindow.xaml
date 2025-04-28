@@ -56,10 +56,19 @@
                                 </Border>
 
                                 <Border Margin="24 0" CornerRadius="5">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="/Assets/calendar.png" Height="12" Width="12"
-                                            Margin="0 0 4 0"/>
-                                        <TextBlock Text="Calendar" Style="{StaticResource NormalText}" FontSize="14" />
+                                    <StackPanel>
+                                        <Border x:Name="CalendarBtn" MouseUp="CalendarBtn_MouseUp" Background="#A4BEF3" Padding="4" CornerRadius="4">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Assets/calendar.png" Height="12" Width="12" Margin="0 0 4 0"/>
+                                                <TextBlock Text="Calendar" Style="{StaticResource NormalText}" FontSize="14" />
+                                            </StackPanel>
+                                        </Border>
+                                        <Border  x:Name="TodoTaskBtn" MouseUp="TodoTaskBtn_MouseUp" Margin="0 12" Padding="4" CornerRadius="4">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="/Assets/list.png" Height="12" Width="12" Margin="0 0 4 0"/>
+                                                <TextBlock Text="Todo task" Style="{StaticResource NormalText}" FontSize="14" />
+                                            </StackPanel>
+                                        </Border>
                                     </StackPanel>
                                 </Border>
                             </StackPanel>
@@ -67,7 +76,7 @@
                     </StackPanel>
                 </Border>
 
-                <Border Visibility="Collapsed" x:Name="DayTasksContainer" Grid.Column="1">
+                <Border x:Name="DayTasksContainer" Grid.Column="1" Visibility="Visible">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -87,16 +96,21 @@
                                 </Grid.RowDefinitions>
 
                                 <Border BorderThickness="0 0 0 1" BorderBrush="#e6e8ea">
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                        <Image x:Name="BackMonthBtn" MouseUp="BackMonthBtn_MouseUp" Source="/Assets/arrow_back.png" Width="12" Height="12" Margin="8 0" />
-                                        <TextBlock x:Name="MonthLabel" Text="Septemper" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
-                                        <Image x:Name="ForwardMonthBtn" MouseUp="ForwardMonthBtn_MouseUp" Source="/Assets/arrow_forward.png" Width="12" Height="12" Margin="8 0" />
-                                        <Border Margin="570 0 0 0">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image x:Name="AddDailyTaskBtn" MouseUp="AddDailyTaskBtn_MouseUp" Source="/Assets/add_circle.png" Width="24" Height="24"/>
-                                            </StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image x:Name="BackMonthBtn" MouseUp="BackMonthBtn_MouseUp" Source="/Assets/arrow_back.png" Width="12" Height="12" Margin="8 0" />
+                                            <TextBlock x:Name="MonthLabel" Text="Septemper" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            <Image x:Name="ForwardMonthBtn" MouseUp="ForwardMonthBtn_MouseUp" Source="/Assets/arrow_forward.png" Width="12" Height="12" Margin="8 0" />
+                                        </StackPanel>
+                                        <Border Grid.Column="1" Margin="0 0 24 0">
+                                            <Image x:Name="AddDailyTaskBtn" MouseUp="AddDailyTaskBtn_MouseUp" Source="/Assets/add_circle.png" Width="24" Height="24"/>
                                         </Border>
-                                    </StackPanel>
+                                    </Grid>
                                 </Border>
 
                                 <Border Grid.Row="1" BorderThickness="0 0 0 1" BorderBrush="#e6e8ea">
@@ -278,7 +292,7 @@
                     </Grid>
                 </Border>
 
-                <Border x:Name="LongTaskContainer" Grid.Column="1" Visibility="Visible">
+                <Border x:Name="TodoTaskContainer" Grid.Column="1" Visibility="Collapsed">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -296,38 +310,62 @@
                                     <RowDefinition Height="8*" />
                                 </Grid.RowDefinitions>
 
-                                <Border CornerRadius="10" BorderThickness="1" BorderBrush="#e6e8ea" Margin="20 0" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="10">
+                                <Border CornerRadius="10" BorderThickness="1" BorderBrush="#e6e8ea"  VerticalAlignment="Center" HorizontalAlignment="Center" Padding="10">
                                     <StackPanel Orientation="Horizontal">
-                                        <Label Content="Task's Name" />
-                                        <TextBox Margin="10 0" Width="400" VerticalAlignment="Center"/>
-                                        <Button FontSize="12" Background="AliceBlue" Content="Search" Style="{StaticResource SideBarButton}"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="Label's name" />
+                                            <TextBox x:Name="LabelNameSearchInput" Margin="10 0" Width="400" VerticalAlignment="Center"/>
+                                            <Button x:Name="LabelSearchBtn" Click="LabelSearchBtn_Click" FontSize="12" Background="AliceBlue" Content="Search" Style="{StaticResource SideBarButton}"/>
+                                            <Button x:Name="AddLabelBtn" Click="AddLabelBtn_Click" FontSize="12" Background="AliceBlue" Content="Add" Style="{StaticResource SideBarButton}" Margin="12 0 0 0"/>
+                                        </StackPanel>
                                     </StackPanel>
                                 </Border>
 
-                                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-                                    <Border Padding="20">
-                                        <StackPanel Margin="0 0 0 20">
-                                            <TextBlock Text="Label Name" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold"/>
-                                            <TextBlock Text="Long desc" Style="{StaticResource SubText}" TextWrapping="Wrap" FontSize="16" Margin="0 12"/>
+                                <ListBox x:Name="TodoTasksListTable" Grid.Row="1" BorderBrush="Transparent" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                    <ListBox.Template>
+                                        <ControlTemplate TargetType="{x:Type ListBox}">
+                                            <ScrollViewer CanContentScroll="False" HorizontalScrollBarVisibility="Disabled">
+                                                <ItemsPresenter />
+                                            </ScrollViewer>
+                                        </ControlTemplate>
+                                    </ListBox.Template>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Padding="20">
+                                                <StackPanel Margin="0 0 0 20">
+                                                    <StackPanel x:Name="LabelInfo" MouseRightButtonUp="LabelInfo_MouseRightButtonUp" Background="Transparent" Tag="{Binding Key}">
+                                                        <TextBlock Text="{Binding Key.LabelName}" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold"/>
+                                                        <TextBlock Text="{Binding Key.Description}" Style="{StaticResource SubText}" TextWrapping="Wrap" FontSize="16" Margin="0 12"/>
+                                                    </StackPanel>
 
-                                            <Border Background="Transparent" Margin="20 10 0 0" Padding="4" BorderThickness="1" BorderBrush="Black" CornerRadius="4">
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="32"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="100"/>
-                                                    </Grid.ColumnDefinitions>
+                                                    <ListBox ItemsSource="{Binding Value}" BorderBrush="Transparent" MouseDoubleClick="TodoTasksSubList_MouseDoubleClick">
+                                                        <ListBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Border Background="Transparent" Margin="20 10 0 0" Padding="4" BorderThickness="1" BorderBrush="Black" CornerRadius="4">
+                                                                    <Grid>
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="32"/>
+                                                                            <ColumnDefinition Width="*"/>
+                                                                            <ColumnDefinition Width="100"/>
+                                                                        </Grid.ColumnDefinitions>
 
-                                                    <Image Source="/Assets/todo_list.png" Height="24" Width="24" />
-                                                    <TextBlock Text="Todo name" TextWrapping="Wrap" FontSize="16" Margin="8 0 0 0" Grid.Column="1"/>
-                                                    <Border Padding="4" CornerRadius="5" Background="#BCF8EC" Grid.Column="2" >
-                                                        <TextBlock Text="In proccess" Style="{StaticResource SubText}" FontSize="12" TextAlignment="Center"/>
-                                                    </Border>
-                                                </Grid>
+                                                                        <Image Source="/Assets/todo_list.png" Height="24" Width="24" />
+                                                                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontSize="16" Margin="8 0 0 0" Grid.Column="1"/>
+                                                                        <Border Padding="4" CornerRadius="5" Background="#BCF8EC" Grid.Column="2" >
+                                                                            <TextBlock Text="{Binding Status}" Style="{StaticResource SubText}" FontSize="12" TextAlignment="Center"/>
+                                                                        </Border>
+                                                                    </Grid>
+                                                                </Border>
+                                                            </DataTemplate>
+                                                        </ListBox.ItemTemplate>
+                                                    </ListBox>
+
+                                                    <Image Tag="{Binding Key.LabelId}" x:Name="AddTodoTaskBtn" MouseUp="AddTodoTaskBtn_MouseUp" Source="/Assets/add.png" Height="24" Width="24" HorizontalAlignment="Right"/>
+                                                </StackPanel>
                                             </Border>
-                                        </StackPanel>
-                                    </Border>
-                                </ScrollViewer>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
                             </Grid>
                         </Border>
                     </Grid>

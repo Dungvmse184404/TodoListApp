@@ -5,17 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
         mc:Ignorable="d" Loaded="Window_Loaded"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Height="600" Width="400">
+       WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Height="600" Width="400">
     <Grid>
         <Border Style="{StaticResource ImgClose}" Panel.ZIndex="1" x:Name="CloseBtn" MouseUp="CloseBtn_MouseUp">
             <Image Source="/Assets/close.png"  Width="24" Height="24"/>
         </Border>
 
         <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-            <Border CornerRadius="10" Background="#f6f8fa" Padding="10 40 10 10">
+            <Border CornerRadius="10" Background="#f6f8fa" BorderThickness="1" BorderBrush="Black" Padding="10 40 10 10">
                 <StackPanel>
                     <Image Source="/Assets/todo_list.png" Width="32" Height="32" HorizontalAlignment="Left"/>
-                    <TextBlock Text="adadadad" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="TitleShow" Text="" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap"/>
+                    <TextBox x:Name="TitleInput" Text="" Style="{StaticResource NormalTextBox}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap" Visibility="Collapsed"/>
                     <Grid Height="100" Width="320" Margin="0 12 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -40,40 +41,55 @@
                             <TextBlock Text="End time" Style="{StaticResource  SubText}" FontSize="14"/>
                         </StackPanel>
 
-                        <ComboBox Height="24" Style="{StaticResource CustomComboBoxStyle}" Grid.Column="1">
-                            <ComboBoxItem Content="On going" />
-                            <ComboBoxItem Content="Completed" />
+                        <ComboBox SelectionChanged="StatusInput_SelectionChanged" x:Name="StatusInput" Height="24" Style="{StaticResource CustomComboBoxStyle}" Grid.Column="1">
+
                         </ComboBox>
 
                         <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-                            <TextBlock Text="20/04/2025" Style="{StaticResource NormalText}" FontSize="14" Margin="0 0 8 0"/>
-                            <Image Source="/Assets/edit.png" Height="20" Width="20" />
-                            <Image Source="/Assets/check.png" Height="20" Width="20"/>
+                            <DatePicker IsEnabled="False" x:Name="StartTime"/>
+                            <Image MouseUp="EditStartDate_MouseUp" x:Name="EditStartDate" Source="/Assets/edit.png" Height="20" Width="20" />
+                            <Image MouseUp="SaveStartTime_MouseUp" x:Name="SaveStartTime" Source="/Assets/check.png" Height="20" Width="20" Visibility="Hidden"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-                            <TextBlock Text="20/04/2025" Style="{StaticResource NormalText}" FontSize="14" Margin="0 0 8 0"/>
-                            <Image Source="/Assets/edit.png" Height="20" Width="20" />
-                            <Image Source="/Assets/check.png" Height="20" Width="20"/>
+                            <DatePicker IsEnabled="False" x:Name="EndTime"/>
+                            <Image MouseUp="EditEndDate_MouseUp" x:Name="EditEndDate" Source="/Assets/edit.png" Height="20" Width="20" />
+                            <Image MouseUp="SaveEndTime_MouseUp" x:Name="SaveEndTime" Source="/Assets/check.png" Height="20" Width="20" Visibility="Hidden"/>
                         </StackPanel>
                     </Grid>
 
                     <StackPanel Margin="0 12 0 0">
                         <TextBlock Text="Description" Style="{StaticResource NormalText}" Margin="12 0" />
-                        <TextBlock Text="Long text" Style="{StaticResource SubText}" Margin="12 4 0 8"/>
+                        <TextBox x:Name="DescInput" Text="" Style="{StaticResource SubTextBox}" Margin="12 4 0 8" Visibility="Collapsed"/>
+                        <TextBlock x:Name="DescShow" Text="" Style="{StaticResource SubText}" Margin="12 4 0 8"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Image Source="/Assets/edit.png" Height="20" Width="20" />
-                            <Image Source="/Assets/check.png" Height="20" Width="20" Margin="0 0 32 0"/>
+                            <Image MouseUp="EditDesct_MouseUp" x:Name="EditDesct" Source="/Assets/edit.png" Height="20" Width="20" />
+                            <Image MouseUp="DescSave_MouseUp" x:Name="DescSave" Source="/Assets/check.png" Height="20" Width="20" Margin="0 0 32 0" Visibility="Hidden"/>
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel Margin="12 20">
+                    <StackPanel x:Name="SubtasksContainer" Margin="12 20">
                         <TextBlock Text="Sub task" Style="{StaticResource NormalText}" FontSize="16" FontWeight="Bold" Margin="0 0 0 8"/>
-                        <StackPanel Margin="12 0 0 0">
-                            <CheckBox Content="Test" />
-                        </StackPanel>
-                        <Image Source="/Assets/add.png" Height="24" Width="24" HorizontalAlignment="Right" Margin="32 12"/>
+                        <ListBox x:Name="ListSubtasks">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="12 0 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="24"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <CheckBox Content="{Binding Description}" IsChecked="{Binding IsCompleted}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                                        <Image Tag="{Binding}" x:Name="DeleteSubTaskBtn" MouseUp="DeleteSubTaskBtn_MouseUp" Grid.Column="1" Source="/Assets/delete.png" Width="24" Height="24" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Image x:Name="AddSubtask" MouseUp="AddSubtask_MouseUp" Source="/Assets/add.png" Height="24" Width="24" HorizontalAlignment="Right" Margin="32 12"/>
                     </StackPanel>
+
+                    <Button Click="SaveBtn_Click" x:Name="SaveBtn" Content="Save" Style="{StaticResource ActionButton}" Visibility="Collapsed"/>
+                    <Button Click="DeleteBtn_Click" x:Name="DeleteBtn" Content="Delete" Style="{StaticResource ActionButton}"/>
                 </StackPanel>
             </Border>
         </ScrollViewer>

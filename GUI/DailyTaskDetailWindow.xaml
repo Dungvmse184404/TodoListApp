@@ -4,9 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent" 
-         Height="400" Width="600">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" Loaded="Window_Loaded"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Height="400" Width="600">
     <Grid>
         <Border Style="{StaticResource ImgClose}" Panel.ZIndex="1" x:Name="CloseBtn" MouseUp="CloseBtn_MouseUp">
             <Image Source="/Assets/close.png"  Width="24" Height="24"/>
@@ -14,18 +13,18 @@
 
         <Border CornerRadius="10" Background="#f6f8fa" BorderThickness="1" BorderBrush="Black" Padding="10 40 10 10">
             <Canvas>
-                <Label Content="Title" />
-                <TextBox x:Name="TitleInput" Canvas.Left="98" Canvas.Top="7" HorizontalAlignment="Left" VerticalAlignment="Center" Width="424"/>
-                <Label Content="Description" HorizontalAlignment="Center" Canvas.Top="30" VerticalAlignment="Top" />
-                <TextBox x:Name="DescInput" Canvas.Left="98" Canvas.Top="37" Width="424" HorizontalAlignment="Center" VerticalAlignment="Top" Height="100" />
+                <Label Content="Title" Canvas.Left="1" Canvas.Top="7" />
+                <TextBox x:Name="TitleInput" Canvas.Left="98" Canvas.Top="7" HorizontalAlignment="Left" VerticalAlignment="Center" Width="424" Padding="4"/>
+                <Label Content="Description" HorizontalAlignment="Center" Canvas.Top="37" VerticalAlignment="Top" />
+                <TextBox Padding="4" x:Name="DescInput" Canvas.Left="98" Canvas.Top="37" Width="424" HorizontalAlignment="Center" VerticalAlignment="Top" Height="100" TextWrapping="Wrap" AcceptsReturn="True"  />
                 <Label Content="Date" HorizontalAlignment="Left" Canvas.Top="153" VerticalAlignment="Center" Canvas.Left="-1" />
                 <DatePicker x:Name="DateInput" Canvas.Left="98" Canvas.Top="157" />
                 <Label Content="Start time" HorizontalAlignment="Center" Canvas.Top="153" VerticalAlignment="Center" Canvas.Left="208" />
-                <materialDesign:TimePicker x:Name="StartTime" Canvas.Left="310" Canvas.Top="149" HorizontalAlignment="Center" VerticalAlignment="Top" Height="32" Width="100" BorderThickness="1" BorderBrush="Black" Padding="4"/>
+                <materialDesign:TimePicker x:Name="StartTime" Canvas.Left="310" Canvas.Top="149" HorizontalAlignment="Left" VerticalAlignment="Center" Height="32" Width="120" BorderThickness="1" BorderBrush="Black" Padding="4"/>
                 <Label Content="End time" HorizontalAlignment="Center" Canvas.Top="198" VerticalAlignment="Top" Canvas.Left="208" />
-                <materialDesign:TimePicker x:Name="EndTime" Canvas.Left="310" Canvas.Top="198" HorizontalAlignment="Center" VerticalAlignment="Top" Height="32" Width="100" BorderThickness="1" BorderBrush="Black" Padding="4"/>
-                <Button Click="SaveBtn_Click" x:Name="SaveBtn" Content="Save" Style="{StaticResource ActionButton}" Canvas.Left="183" Canvas.Top="265" />
-                <Button Click="CancelBtn_Click" x:Name="CancelBtn" Content="Cancel" Style="{StaticResource ActionButton}" Canvas.Left="290" Canvas.Top="265" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <materialDesign:TimePicker x:Name="EndTime" Canvas.Left="310" Canvas.Top="198" HorizontalAlignment="Center" VerticalAlignment="Top" Height="32" Width="120" BorderThickness="1" BorderBrush="Black" Padding="4"/>
+                <Button Click="SaveBtn_Click" x:Name="SaveBtn" Content="Save" Style="{StaticResource ActionButton}" Canvas.Left="190" Canvas.Top="265" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <Button Click="CancelBtn_Click" x:Name="CancelBtn" Content="Cancel" Style="{StaticResource ActionButton}" Canvas.Left="310" Canvas.Top="265" HorizontalAlignment="Left" VerticalAlignment="Center" />
             </Canvas>
         </Border>
     </Grid>

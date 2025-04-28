@@ -1,83 +1,37 @@
 ﻿using BLL.Interfaces;
-using BLL.Utilities.Validators;
 using DAL.Interfaces;
 using DAL.Repositories;
-using Models.DTOs;
 using Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static BLL.Utilities.Validators.ValidateDataType;
 
 namespace BLL.Services
 {
     public class LabelService : ILabelService
     {
-        private readonly ILabelRepository _labelRepository = new LabelRepository();
-        private ValidateLabel _validator = new();
-        public LabelService()
+        private readonly ILabelRepository _repo = new LabelRepository();
+
+        public async Task<Label?> AddLabelAsync(Label newLabel)
         {
+            return await _repo.AddLabelAsync(newLabel);
         }
 
-        /// <summary>
-        /// thêm mới 1 label
-        /// </summary>
-        /// <param name="newLabel"></param>
-        /// <returns></returns>
-        public async Task<Label> AddLabelAsync(LabelDto newLabel)
+        public async Task<Label?> DeleteLabelAsync(int id)
         {
-            var labelDto = _validator.ValidatelabelDto(newLabel);
-            var label = new Label
-            {
-                LabelName = labelDto.LabelName,
-                Description = labelDto.Description,
-            };
-            return await _labelRepository.AddLabelAsync(label);
+            return await _repo.DeleteLabelAsync(id);
         }
 
-        /// <summary>
-        /// xóa 1 label
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<Label> DeleteLabelAsync(int id)
-        {
-            return await _labelRepository.DeleteLabelAsync(id);
-        }
-
-        /// <summary>
-        /// lấy tất cả label
-        /// </summary>
-        /// <returns></returns>
         public async Task<List<Label>> GetAllLabelsAsync()
         {
-            return await _labelRepository.GetAllLabelsAsync();
+            return await _repo.GetAllLabelsAsync();
         }
 
-        /// <summary>
-        /// lấy label theo id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         public async Task<Label?> GetLabelByIdAsync(int id)
         {
-            return await _labelRepository.GetLabelByIdAsync(id);
+            return await _repo.GetLabelByIdAsync(id);
         }
 
-        /// <summary>
-        /// cập nhật label
-        /// </summary>
-        /// <param name="label"></param>
-        /// <returns></returns>
-        public async Task<Label> UpdateLabelAsync(LabelDto labelDto, int Id)
+        public async Task<Label?> UpdateLabelAsync(Label label)
         {
-            var label = await _validator.ValidateUpdateLabelDto(labelDto, Id);
-            label.LabelName = labelDto.LabelName;
-            label.Description = labelDto.Description;
-
-            return await _labelRepository.UpdateLabelAsync(label);
+            return await _repo.UpdateLabelAsync(label);
         }
     }
 }

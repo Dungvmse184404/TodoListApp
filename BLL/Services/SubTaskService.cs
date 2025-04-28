@@ -1,83 +1,39 @@
 ﻿using BLL.Interfaces;
-using BLL.Utilities.Validators;
 using DAL.Interfaces;
 using DAL.Repositories;
 using Models.DTOs;
 using Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Services
 {
     public class SubTaskService : ISubTaskService
     {
-        private readonly ISubTaskRepository _subTaskRepository = new SubTaskRepository();
-        private readonly ValidateSubTask _validator = new();
-        public SubTaskService()
+        private readonly ISubTaskRepository _repo = new SubTaskRepository();
+
+        public async Task AddSubTaskAsync(SubTask subTask)
         {
+            await _repo.AddSubTaskAsync(subTask);
         }
 
-        public async Task<SubTask> AddSubTaskAsync(SubTaskDto subTaskDto)
+        public async Task DeleteSubTaskAsync(int id)
         {
-            var subTask = await _validator.ValidateSubTaskDto(subTaskDto);
-            var addSubTask = new SubTask()
-            {
-                Description = subTask.Description,
-                IsCompleted = subTask.IsCompleted,
-                TodoTaskId = subTask.TodoTaskId
-            };
-            return await _subTaskRepository.AddSubTaskAsync(addSubTask);
-        }
-
-        public async Task<SubTask> DeleteSubTaskAsync(int id)
-        {
-            var subTask = await _subTaskRepository.GetSubTaskByIdAsync(id);
-            if (subTask == null)
-            {
-                throw new Exception("không tìm thấy SubTask");
-            }
-           return await _subTaskRepository.DeleteSubTaskAsync(id);
+            await _repo.DeleteSubTaskAsync(id);
         }
 
         public async Task<List<SubTask>> GetAllSubTasksAsync()
         {
-            return await _subTaskRepository.GetAllSubTasksAsync();
+            return await _repo.GetAllSubTasksAsync();
         }
 
         public async Task<SubTask?> GetSubTaskByIdAsync(int id)
         {
-            var SubTask = await _subTaskRepository.GetSubTaskByIdAsync(id);
-            if (SubTask == null)
-            {
-                throw new KeyNotFoundException("không tìm thấy SubTask");
-            }
-            return SubTask;
+            return await _repo.GetSubTaskByIdAsync(id);
         }
 
-        public async Task<SubTask> UpdateSubTaskAsync(UpdateSubTaskDto subTaskDto)
+        public async Task<SubTask?> UpdateSubTaskAsync(SubTask subTask)
         {
-            var upSubTask = await _subTaskRepository.GetSubTaskByIdAsync(subTaskDto.SubTaskId);
-            if (upSubTask == null)
-            {
-                throw new Exception("không tìm thấy SubTask");
-            }
-            var subTask = await _validator.ValidateUpdateSubTaskDto(subTaskDto);
 
-            upSubTask.Description = subTask.Description;
-            upSubTask.IsCompleted = subTask.IsCompleted;
-            upSubTask.TodoTaskId = subTask.TodoTaskId;
-            
-            return await _subTaskRepository.UpdateSubTaskAsync(upSubTask);
+            return await _repo.UpdateSubTaskAsync(subTask);
         }
-
-        public async Task UpdateTodoTaskStatus(int subTaskId)
-        {
-           
-        }
-
-
     }
 }

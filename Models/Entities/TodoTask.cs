@@ -21,7 +21,7 @@ public partial class TodoTask
 
     public DateTime? UpdatedDate { get; set; }
 
-    public int? LabelId { get; set; }
+    public int LabelId { get; set; }
 
     public virtual Label? Label { get; set; }
 

@@ -7,14 +7,11 @@ namespace DAL.Repositories
 {
     public class SubTaskRepository : ISubTaskRepository
     {
-        private readonly TodoListAppDbContext _dbContext;
-        public SubTaskRepository()
-        {
-            _dbContext = new TodoListAppDbContext();
-        }
+        private TodoListAppDbContext _dbContext = null!;
 
         public async Task<List<SubTask>> GetAllSubTasksAsync()
         {
+            _dbContext = new();
             return await _dbContext.SubTasks
                 .Include(s => s.TodoTask)
                 .ToListAsync();
@@ -22,6 +19,7 @@ namespace DAL.Repositories
 
         public async Task<List<SubTask>> GetSubTasksByTodoTaskIdAsync(int todoTaskId)
         {
+            _dbContext = new();
             return await _dbContext.SubTasks
                 .Where(s => s.TodoTaskId == todoTaskId)
                 .ToListAsync();
@@ -29,43 +27,36 @@ namespace DAL.Repositories
 
         public async Task<SubTask?> GetSubTaskByIdAsync(int id)
         {
+            _dbContext = new();
             return await _dbContext.SubTasks
                 .Include(s => s.TodoTask)
                 .FirstOrDefaultAsync(s => s.SubTaskId == id);
         }
 
-        public async Task<SubTask?> AddSubTaskAsync(SubTask subTask)
+        public async Task AddSubTaskAsync(SubTask subTask)
         {
+            _dbContext = new();
             await _dbContext.SubTasks.AddAsync(subTask);
             await _dbContext.SaveChangesAsync();
-            return subTask;
         }
 
-        public async Task<SubTask?> DeleteSubTaskAsync(int id)
+        public async Task DeleteSubTaskAsync(int id)
         {
+            _dbContext = new();
             var deleteSubTask = await _dbContext.SubTasks.FindAsync(id);
             if (deleteSubTask != null)
             {
                 _dbContext.SubTasks.Remove(deleteSubTask);
                 await _dbContext.SaveChangesAsync();
-            }
-            return deleteSubTask;
+            } 
         }
-
-        
 
         public async Task<SubTask?> UpdateSubTaskAsync(SubTask updateSubTask)
         {
-            var subTask = await _dbContext.SubTasks.FindAsync(updateSubTask.SubTaskId);
-            if (subTask != null)
-            {
-                subTask.Description = updateSubTask.Description;
-                subTask.IsCompleted = updateSubTask.IsCompleted;
-                subTask.TodoTaskId = updateSubTask.TodoTaskId;
-
-                await _dbContext.SaveChangesAsync();
-            }
-            return subTask;
+            _dbContext = new();
+            _dbContext.SubTasks.Update(updateSubTask);
+            await _dbContext.SaveChangesAsync();
+            return updateSubTask;
         }
 
 
