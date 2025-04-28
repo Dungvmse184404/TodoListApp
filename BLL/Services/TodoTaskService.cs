@@ -8,6 +8,7 @@ namespace BLL.Services
     public class TodoTaskService : ITodoTaskService
     {
         private readonly ITodoTaskRepository _repo = new TodoTaskRepository();
+        private readonly ISubTaskRepository _subTaskRepo = new SubTaskRepository();
 
         public async Task<TodoTask?> AddTodoTaskAsync(TodoTask todoTask)
         {
@@ -33,5 +34,17 @@ namespace BLL.Services
         {
             await _repo.UpdateTodoTaskAsync(todoTask);
         }
+
+        //public async Task GetAllSubTasksByTodoTaskIdAsync(int todoTaskId)
+        //{
+        //    var TodoTask = await _repo.GetTodoTaskByIdAsync(todoTaskId);
+        //    var subTaskList = await _subTaskRepo.GetSubTaskByTodoTaskIdAsync(todoTaskId);
+        //    var completedTasks = subTaskList.Where(x => x.IsCompleted == true).ToList();
+        //    if (completedTasks.Any())
+        //        TodoTask.Status = "InP";
+
+
+
+        //}
     }
 }

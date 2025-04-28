@@ -59,6 +59,13 @@ namespace DAL.Repositories
             return updateSubTask;
         }
 
+        public async Task<List<SubTask>> GetSubTaskByTodoTaskIdAsync(int todoTaskId)
+        {
+            _dbContext = new();
+            return await _dbContext.SubTasks
+                .Where(s => s.TodoTaskId == todoTaskId)
+                .ToListAsync();
+        }
 
     }
 }

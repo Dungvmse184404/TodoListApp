@@ -546,5 +546,6 @@ namespace GUI
 
             LoadTodoListTask(LabelNameSearchInput.Text);
         }
+
     }
 }

@@ -2,6 +2,7 @@
 {
     public enum LabelStatus
     {
+        Waiting,
         InProgress,
         Completed
     }
