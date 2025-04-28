@@ -35,16 +35,23 @@ namespace BLL.Services
             await _repo.UpdateTodoTaskAsync(todoTask);
         }
 
-        //public async Task GetAllSubTasksByTodoTaskIdAsync(int todoTaskId)
-        //{
-        //    var TodoTask = await _repo.GetTodoTaskByIdAsync(todoTaskId);
-        //    var subTaskList = await _subTaskRepo.GetSubTaskByTodoTaskIdAsync(todoTaskId);
-        //    var completedTasks = subTaskList.Where(x => x.IsCompleted == true).ToList();
-        //    if (completedTasks.Any())
-        //        TodoTask.Status = "InP";
+        public async Task UpdateStatus(int todoTaskId)
+        {
+            var todoTask = await _repo.GetTodoTaskByIdAsync(todoTaskId);
 
+            var subTaskList = await _subTaskRepo.GetSubTaskByTodoTaskIdAsync(todoTaskId);
+            var completedTasks = subTaskList.Where(x => x.IsCompleted == true).ToList();
 
+            if (completedTasks.Any())
+                todoTask.Status = "InProgress";
+            if (completedTasks.Count == subTaskList.Count)
+                todoTask.Status = "Completed";
+            if (completedTasks.Count == 0)
+                todoTask.Status = "InProgress";
 
-        //}
+            await UpdateTodoTaskAsync(todoTask);
+        }
+
+        
     }
 }

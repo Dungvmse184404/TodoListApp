@@ -14,9 +14,9 @@
         <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
             <Border CornerRadius="10" Background="#f6f8fa" BorderThickness="1" BorderBrush="Black" Padding="10 40 10 10">
                 <StackPanel>
-                    <Image Source="/Assets/todo_list.png" Width="32" Height="32" HorizontalAlignment="Left"/>
+                    <Image Source="/Assets/todo_list.png" Width="32" Height="32" HorizontalAlignment="Left" Margin="5 0 0 0"/>
                     <TextBlock x:Name="TitleShow" Text="" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap"/>
-                    <TextBox x:Name="TitleInput" Text="" Style="{StaticResource NormalTextBox}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap" Visibility="Collapsed"/>
+                    <TextBox x:Name="TitleInput" Text="" Style="{StaticResource NormalTextBox}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap" Visibility="Collapsed" Margin=" 0 10 0 0" BorderBrush="Gray" BorderThickness="0 0 0 1"/>
                     <Grid Height="100" Width="320" Margin="0 12 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -60,7 +60,7 @@
 
                     <StackPanel Margin="0 12 0 0">
                         <TextBlock Text="Description" Style="{StaticResource NormalText}" Margin="12 0" />
-                        <TextBox x:Name="DescInput" Text="" Style="{StaticResource SubTextBox}" Margin="12 4 0 8" Visibility="Collapsed"/>
+                        <TextBox x:Name="DescInput" Text="" Style="{StaticResource SubTextBox}" Margin="12 4 0 8" Visibility="Collapsed" BorderThickness="0 0 0 1"/>
                         <TextBlock x:Name="DescShow" Text="" Style="{StaticResource SubText}" Margin="12 4 0 8"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <Image MouseUp="EditDesct_MouseUp" x:Name="EditDesct" Source="/Assets/edit.png" Height="20" Width="20" />
@@ -70,7 +70,7 @@
 
                     <StackPanel x:Name="SubtasksContainer" Margin="12 20">
                         <TextBlock Text="Sub task" Style="{StaticResource NormalText}" FontSize="16" FontWeight="Bold" Margin="0 0 0 8"/>
-                        <ListBox x:Name="ListSubtasks">
+                        <ListBox x:Name="ListSubtasks" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="12 0 0 0">

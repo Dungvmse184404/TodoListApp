@@ -9,5 +9,6 @@ namespace BLL.Interfaces
         Task<TodoTask?> AddTodoTaskAsync(TodoTask todoTask);
         Task UpdateTodoTaskAsync(TodoTask todoTask);
         Task<TodoTask?> DeleteTodoTaskAsync(int id);
+        Task UpdateStatus(int Id);
     }
 }

@@ -337,8 +337,8 @@
                                                         <TextBlock Text="{Binding Key.LabelName}" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold"/>
                                                         <TextBlock Text="{Binding Key.Description}" Style="{StaticResource SubText}" TextWrapping="Wrap" FontSize="16" Margin="0 12"/>
                                                     </StackPanel>
-
-                                                    <ListBox ItemsSource="{Binding Value}" BorderBrush="Transparent" MouseDoubleClick="TodoTasksSubList_MouseDoubleClick">
+                                                    <Border BorderBrush="LightGray" BorderThickness="0 1 0 1" Padding="0 0 0 10" >
+                                                    <ListBox ItemsSource="{Binding Value}" BorderBrush="Transparent" MouseDoubleClick="TodoTasksSubList_MouseDoubleClick"  >
                                                         <ListBox.ItemTemplate>
                                                             <DataTemplate>
                                                                 <Border Background="Transparent" Margin="20 10 0 0" Padding="4" BorderThickness="1" BorderBrush="Black" CornerRadius="4">
@@ -348,7 +348,7 @@
                                                                             <ColumnDefinition Width="*"/>
                                                                             <ColumnDefinition Width="100"/>
                                                                         </Grid.ColumnDefinitions>
-
+                                                                        
                                                                         <Image Source="/Assets/todo_list.png" Height="24" Width="24" />
                                                                         <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontSize="16" Margin="8 0 0 0" Grid.Column="1"/>
                                                                         <Border Padding="4" CornerRadius="5" Style="{StaticResource StatusStyle}" Grid.Column="2" >
@@ -359,7 +359,7 @@
                                                             </DataTemplate>
                                                         </ListBox.ItemTemplate>
                                                     </ListBox>
-
+                                                    </Border>
                                                     <Image Tag="{Binding Key.LabelId}" x:Name="AddTodoTaskBtn" MouseUp="AddTodoTaskBtn_MouseUp" Source="/Assets/add.png" Height="24" Width="24" HorizontalAlignment="Right"/>
                                                 </StackPanel>
                                             </Border>

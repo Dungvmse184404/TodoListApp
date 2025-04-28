@@ -11,5 +11,6 @@ namespace DAL.Interfaces
         Task UpdateTodoTaskAsync(TodoTask UopdateTask);
         Task<TodoTask?> DeleteTodoTaskAsync(int id);
 
+
     }
 }

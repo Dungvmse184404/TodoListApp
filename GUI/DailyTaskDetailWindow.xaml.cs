@@ -25,7 +25,7 @@ namespace GUI
                 DescInput.Text = DailyTask.Description;
                 DateInput.SelectedDate = DailyTask.StartDate;
                 StartTime.SelectedTime = DailyTask.StartDate;
-                EndTime.SelectedTime =DailyTask.DueDate;
+                EndTime.SelectedTime = DailyTask.DueDate;
             }
         }
 
@@ -52,7 +52,7 @@ namespace GUI
                     DueDate = new DateTime(
                         DateInput.SelectedDate.Value.Year, DateInput.SelectedDate.Value.Month, DateInput.SelectedDate.Value.Day, EndTime.SelectedTime.Value.Hour, EndTime.SelectedTime.Value.Minute, EndTime.SelectedTime.Value.Second),
                 };
-                if (DailyTask == null )
+                if (DailyTask == null)
                 {
                     await _dailyTaskService.AddDailyTaskAsync(dailyTask);
                     MessageBox.Show("Add task successfully !");
@@ -63,7 +63,7 @@ namespace GUI
                     await _dailyTaskService.UpdateDailyTaskAsync(dailyTask);
                     MessageBox.Show("Update task successfully !");
                 }
-                    this.Close();
+                this.Close();
             }
         }
 
@@ -120,16 +120,21 @@ namespace GUI
                 MessageBox.Show("You need to choose the end time !", "Warning message", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
-            if (StartTime.SelectedTime.Value.TimeOfDay < DateTime.Now.TimeOfDay)
+
+            if (DateInput.SelectedDate == DateTime.Now.Date)
             {
-                MessageBox.Show("Cannot select time in the past !", "Warning message", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
+                if (StartTime.SelectedTime.Value.TimeOfDay < DateTime.Now.TimeOfDay)
+                {
+                    MessageBox.Show("Cannot select time in the past !", "Warning message", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+                if (StartTime.SelectedTime >= EndTime.SelectedTime)
+                {
+                    MessageBox.Show("The end time cannot be earlier than start time !", "Warning message", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
             }
-            if (StartTime.SelectedTime >= EndTime.SelectedTime)
-            {
-                MessageBox.Show("The end time cannot be earlier than start time !", "Warning message", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
+
             return true;
         }
     }
