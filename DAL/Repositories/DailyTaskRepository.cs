@@ -60,5 +60,12 @@ namespace DAL.Repositories
             _dbContext = new();
             return await _dbContext.DailyTasks.FirstOrDefaultAsync(x => x.Title == title);
         }
+
+        public async Task<bool> IsAvailabeSlotAsync(DateTime startTime, DateTime endTime)
+        {
+            _dbContext = new();
+            var list = await _dbContext.DailyTasks.Where(x => !(x.StartDate > endTime || startTime > x.DueDate)).ToListAsync();
+            return !list.Any();
+        }
     }
 }

@@ -1,13 +1,20 @@
-﻿using System.Windows;
+﻿using ApiExtension.Models.RequestModels;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using ApiExtension.Services;
 using BLL.Interfaces;
 using BLL.Services;
 using Models.Entities;
 using Label = Models.Entities.Label;
+using System.IO;
+using NAudio.Wave;
+using ApiExtension.Models.ResponseModels;
+using System.Windows.Shell;
+using System.Threading.Tasks;
 
 namespace GUI
 {
@@ -19,12 +26,31 @@ namespace GUI
         private ITodoTaskService _todoTaskService = new TodoTaskService();
         private ILabelService _labelService = new LabelService();
         private IDailyTaskService _dailyTaskService = new DailyTaskService();
+        private WeatherService _weatherService = new WeatherService();
         private Dictionary<Label, List<TodoTask>> TodoTasksDict { get; set; } = null!;
+        private DispatcherTimer _notiTimer = new DispatcherTimer();
+
+        private MediaFoundationReader reader;
+        private WaveOutEvent outputDevice;
+        private DispatcherTimer musicTimer;
+        private MusicService _musicService = new();
+        private MusicResponseModel _musicResponseModel = null;
+        private bool isStopping = false;
 
         public MainWindow()
         {
             InitializeComponent();
             UpdateTimeNow();
+
+            WindowChrome windowChrome = new WindowChrome
+            {
+                ResizeBorderThickness = new Thickness(6),
+                CaptionHeight = 0,
+                CornerRadius = new CornerRadius(0),
+                GlassFrameThickness = new Thickness(0)
+            };
+
+            WindowChrome.SetWindowChrome(this, windowChrome);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -33,8 +59,236 @@ namespace GUI
             _timer.Tick += TimeTracker_Tick;
             RealTime_Clock();
 
+            _notiTimer.Interval = TimeSpan.FromSeconds(10);
+            _notiTimer.Tick += NotiTimer_Tick;
+            _notiTimer.Start();
+
+            LoadWeather();
+
             LoadDayInWeek(_currentTime);
             LoadDailyTasksForWeek(_currentTime);
+        }
+
+        private async void NotiTimer_Tick(object sender, EventArgs e)
+        {
+            TimeSpan now = DateTime.Now.TimeOfDay;
+            var listNeedNoti = await _dailyTaskService.GetAllDailyTasksAsync(DateTime.Now, DateTime.Now);
+            List<TimeSpan> reminderTimes = new List<TimeSpan>();
+            foreach (var task in listNeedNoti)
+            {
+                if (Math.Abs((now - task.StartDate.Value.TimeOfDay).TotalMinutes) < 1)
+                {
+                    ShowReminder(task.StartDate.Value.TimeOfDay, task.Title);
+                }
+            }
+
+            if (DateTime.Now.Hour == 0 && DateTime.Now.Minute == 0)
+            {
+                listNeedNoti.Clear();
+            }
+        }
+
+        private void ShowReminder(TimeSpan time, string work)
+        {
+            string title = "Notification!";
+            string message = $"It's {time.Hours:D2}:{time.Minutes:D2}, you need to {work}.";
+
+            var toast = new ToastWindow(title, message);
+            toast.Show();
+        }
+
+        private void StartImageRotage()
+        {
+            musicTimer = new DispatcherTimer();
+            musicTimer.Interval = TimeSpan.FromMilliseconds(20);
+            musicTimer.Tick += Timer_Tick;
+            musicTimer.Start(); 
+        }
+
+        private void StopImageRotage()
+        {
+            if (musicTimer != null)
+            {
+                musicTimer.Stop();
+            }
+        }
+
+        private async Task<BitmapImage?> LoadImage(string url)
+        {
+            var imageData = await _musicService.GetImageDate(url);
+            if (imageData != null)
+            {
+                var ms = new MemoryStream(imageData);
+
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.StreamSource = ms;
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.EndInit();
+                bitmap.Freeze();
+                return bitmap;
+            }
+            return null;
+        }
+
+        private async void PlayMusicBtn_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (reader != null && outputDevice != null && outputDevice.PlaybackState == PlaybackState.Paused)
+            {
+                outputDevice.Play();
+            } 
+            else if (reader == null && outputDevice == null) 
+            {
+                if (_musicResponseModel == null)
+                {
+                    _musicResponseModel = await _musicService.GetRandomMusicTracks("lofi");
+                    if (_musicResponseModel != null)
+                    {
+                        var firstTrack = _musicResponseModel.ListTracks[0];
+                        PlayMusic(firstTrack);
+                    }
+                }
+            }
+        }
+
+        private void PauseMusicBtn_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (reader != null && outputDevice != null && outputDevice.PlaybackState == PlaybackState.Playing)
+            {
+                outputDevice.Pause();
+            }
+        }
+
+        private async void NextMusicBtn_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (reader != null && outputDevice != null)
+            {
+                _musicResponseModel = await _musicService.GetRandomMusicTracks("lofi");
+                if (_musicResponseModel != null)
+                {
+                    var firstTrack = _musicResponseModel.ListTracks[0];
+                    PlayMusic(firstTrack);
+                }
+            }
+        }
+
+        private void StopMusicBtn_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            StopMusic();
+            _musicResponseModel = null;
+        }
+
+        private async void PlayMusic(MusicInfo musicInfo)
+        {
+            StopMusic();
+            StartImageRotage(); 
+
+            MusicImage.ImageSource = await LoadImage(musicInfo.Image);
+            MusicName.Text = musicInfo.Name;
+            Artist.Text = musicInfo.ArtistName;
+
+            reader = new MediaFoundationReader(musicInfo.Audio);
+            outputDevice = new WaveOutEvent();
+            outputDevice.Init(reader);
+            outputDevice.Play();
+            outputDevice.PlaybackStopped += OutputDevice_PlaybackStopped;
+        }
+
+        private async void OutputDevice_PlaybackStopped(object sender, StoppedEventArgs e)
+        {
+            await Dispatcher.InvokeAsync(async () =>
+               {
+                   if (isStopping)
+                   {
+                       isStopping = false;
+                       return;
+                   }
+
+                   if (_musicResponseModel != null && _musicResponseModel.ListTracks.Count > 0)
+                   {
+                       _musicResponseModel.ListTracks.RemoveAt(0);
+                       if (_musicResponseModel.ListTracks.Count > 0)
+                       {
+                           PlayMusic(_musicResponseModel.ListTracks[0]);
+                       }
+                       else
+                       {
+                           _musicResponseModel = await _musicService.GetRandomMusicTracks("lofi");
+                           if (_musicResponseModel != null)
+                           {
+                               var firstTrack = _musicResponseModel.ListTracks[0];
+                               PlayMusic(firstTrack);
+                           }
+                       }
+                   }
+               });
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (reader != null && outputDevice != null)
+            {
+                MusicImageRotage.Angle += 1; 
+                if (MusicImageRotage.Angle >= 360)
+                {
+                    MusicImageRotage.Angle = 0;
+                }
+            }
+        }
+
+        private void StopMusic()
+        {
+            StopImageRotage();
+
+            if (outputDevice != null)
+            {
+                isStopping = true;
+
+                outputDevice.Stop();
+                outputDevice.Dispose();
+                outputDevice = null;
+            }
+            if (reader != null)
+            {
+                reader.Dispose();
+                reader = null;
+            }
+        }
+
+        private async void LoadWeather()
+        {
+            var weather = await _weatherService.GetCurrentWeather(new WeatherRequestModel()
+            {
+                City = "Ho%20Chi%20Minh,VN"
+            });
+            if (weather != null)
+            {
+                Temp.Text = $"{weather.MainInfo.Temp} °C";
+                FeelTemp.Text = $"Feel: {weather.MainInfo.FeelsLike} °C";
+                TempMin.Text = $"{weather.MainInfo.TempMin} °C";
+                TempMax.Text = $"{weather.MainInfo.TempMax} °C";
+                SetWeatherIconAsync(weather.Weathers[0].Icon);
+                TempDesc.Text = weather.Weathers[0].Description;
+            }
+        }
+
+        private async Task SetWeatherIconAsync(string iconCode)
+        {
+            var imageData = await _weatherService.GetWeatherIconBytesAsync(iconCode);
+            if (imageData != null)
+            {
+                using (var stream = new MemoryStream(imageData))
+                {
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.StreamSource = stream;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+
+                    WeatherIcon.Source = bitmap;
+                }
+            }
         }
 
         private void AddTodoTaskBtn_MouseUp(object sender, MouseButtonEventArgs e)
@@ -53,7 +307,7 @@ namespace GUI
 
         private void AddLabelBtn_Click(object sender, RoutedEventArgs e)
         {
-            LabelDetailWindow labelDetailWindow = new LabelDetailWindow();  
+            LabelDetailWindow labelDetailWindow = new LabelDetailWindow();
             labelDetailWindow.ShowDialog();
 
             LoadTodoListTask(LabelNameSearchInput.Text);
@@ -545,6 +799,14 @@ namespace GUI
             CalendarBtn.Background = Brushes.Transparent;
 
             LoadTodoListTask(LabelNameSearchInput.Text);
+        }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource == MainBorder)
+            {
+                this.DragMove();
+            }
         }
     }
 }

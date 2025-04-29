@@ -10,5 +10,6 @@ namespace DAL.Interfaces
         Task<DailyTask> AddDailyTaskAsync(DailyTask dailyTask);
         Task<DailyTask> UpdateDailyTaskAsync(DailyTask dailyTask);
         Task DeleteDailyTaskAsync(int id);
+        Task<bool> IsAvailabeSlotAsync(DateTime startTime, DateTime endTime);
     }
 }

@@ -25,7 +25,7 @@ namespace GUI
                 DescInput.Text = DailyTask.Description;
                 DateInput.SelectedDate = DailyTask.StartDate;
                 StartTime.SelectedTime = DailyTask.StartDate;
-                EndTime.SelectedTime =DailyTask.DueDate;
+                EndTime.SelectedTime = DailyTask.DueDate;
             }
         }
 
@@ -43,27 +43,36 @@ namespace GUI
         {
             if (CheckTitle() && CheckDescription() && CheckDate() && CheckTime())
             {
-                DailyTask dailyTask = new DailyTask()
+                if (await _dailyTaskService.IsAvailabeSlotAsync(new DateTime(
+                        DateInput.SelectedDate.Value.Year, DateInput.SelectedDate.Value.Month, DateInput.SelectedDate.Value.Day, StartTime.SelectedTime.Value.Hour, StartTime.SelectedTime.Value.Minute, StartTime.SelectedTime.Value.Second), new DateTime(
+                        DateInput.SelectedDate.Value.Year, DateInput.SelectedDate.Value.Month, DateInput.SelectedDate.Value.Day, EndTime.SelectedTime.Value.Hour, EndTime.SelectedTime.Value.Minute, EndTime.SelectedTime.Value.Second)))
                 {
-                    Title = TitleInput.Text,
-                    Description = DescInput.Text,
-                    StartDate = new DateTime(
+                    DailyTask dailyTask = new DailyTask()
+                    {
+                        Title = TitleInput.Text,
+                        Description = DescInput.Text,
+                        StartDate = new DateTime(
                         DateInput.SelectedDate.Value.Year, DateInput.SelectedDate.Value.Month, DateInput.SelectedDate.Value.Day, StartTime.SelectedTime.Value.Hour, StartTime.SelectedTime.Value.Minute, StartTime.SelectedTime.Value.Second),
-                    DueDate = new DateTime(
+                        DueDate = new DateTime(
                         DateInput.SelectedDate.Value.Year, DateInput.SelectedDate.Value.Month, DateInput.SelectedDate.Value.Day, EndTime.SelectedTime.Value.Hour, EndTime.SelectedTime.Value.Minute, EndTime.SelectedTime.Value.Second),
-                };
-                if (DailyTask == null )
-                {
-                    await _dailyTaskService.AddDailyTaskAsync(dailyTask);
-                    MessageBox.Show("Add task successfully !");
-                }
-                else
-                {
-                    dailyTask.DailyTasksId = DailyTask.DailyTasksId;
-                    await _dailyTaskService.UpdateDailyTaskAsync(dailyTask);
-                    MessageBox.Show("Update task successfully !");
-                }
+                    };
+                    if (DailyTask == null)
+                    {
+                        await _dailyTaskService.AddDailyTaskAsync(dailyTask);
+                        MessageBox.Show("Add task successfully !");
+                    }
+                    else
+                    {
+                        dailyTask.DailyTasksId = DailyTask.DailyTasksId;
+                        await _dailyTaskService.UpdateDailyTaskAsync(dailyTask);
+                        MessageBox.Show("Update task successfully !");
+                    }
                     this.Close();
+                } else
+                {
+                    MessageBox.Show("This time is invalid !", "Warning message", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                    
             }
         }
 

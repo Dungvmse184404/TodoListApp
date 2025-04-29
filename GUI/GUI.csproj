@@ -13,21 +13,29 @@
     <None Remove="Assets\add_circle.png" />
     <None Remove="Assets\arrow_back.png" />
     <None Remove="Assets\arrow_forward.png" />
+    <None Remove="Assets\artist.png" />
     <None Remove="Assets\calendar.png" />
     <None Remove="Assets\check.png" />
     <None Remove="Assets\close.png" />
     <None Remove="Assets\delete.png" />
     <None Remove="Assets\delete_source.png" />
+    <None Remove="Assets\device_thermostat.png" />
+    <None Remove="Assets\diathan.png" />
     <None Remove="Assets\edit.png" />
     <None Remove="Assets\edit_source.png" />
     <None Remove="Assets\list.png" />
     <None Remove="Assets\minimize.png" />
+    <None Remove="Assets\music_note.png" />
     <None Remove="Assets\pause.png" />
+    <None Remove="Assets\pause_presentation.png" />
     <None Remove="Assets\pending.png" />
     <None Remove="Assets\play.png" />
     <None Remove="Assets\replay.png" />
+    <None Remove="Assets\skip_next.png" />
     <None Remove="Assets\timer.png" />
     <None Remove="Assets\todo_list.png" />
+    <None Remove="Assets\trending_down.png" />
+    <None Remove="Assets\trending_up.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +51,9 @@
     <Content Include="Assets\arrow_forward.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\artist.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\calendar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -52,13 +63,25 @@
     <Content Include="Assets\delete.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\device_thermostat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\diathan.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\list.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\minimize.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\music_note.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\pause.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\pause_presentation.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\pending.png">
@@ -68,6 +91,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\replay.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\skip_next.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\timer.png">
@@ -85,14 +111,22 @@
     <Content Include="Assets\edit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\trending_down.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\trending_up.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignColors" Version="5.2.1" />
     <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ApiExtension\ApiExtension.csproj" />
     <ProjectReference Include="..\BLL\BLL.csproj" />
   </ItemGroup>
 

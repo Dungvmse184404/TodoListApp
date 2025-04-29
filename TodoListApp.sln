@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoListApp.Tests", "TodoListApp.Tests\TodoListApp.Tests.csproj", "{5351F33A-6F1B-4161-B8A4-F7DE44566F60}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiExtension", "ApiExtension\ApiExtension.csproj", "{7798B24A-3CD8-45D2-BA27-60D12785C610}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTest", "ApiTest\ApiTest.csproj", "{D5A6E3E6-7492-4D8C-946D-99F10CCC0780}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,8 +43,19 @@ Global
 		{5351F33A-6F1B-4161-B8A4-F7DE44566F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5351F33A-6F1B-4161-B8A4-F7DE44566F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5351F33A-6F1B-4161-B8A4-F7DE44566F60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7798B24A-3CD8-45D2-BA27-60D12785C610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7798B24A-3CD8-45D2-BA27-60D12785C610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7798B24A-3CD8-45D2-BA27-60D12785C610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7798B24A-3CD8-45D2-BA27-60D12785C610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5A6E3E6-7492-4D8C-946D-99F10CCC0780}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5A6E3E6-7492-4D8C-946D-99F10CCC0780}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5A6E3E6-7492-4D8C-946D-99F10CCC0780}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5A6E3E6-7492-4D8C-946D-99F10CCC0780}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70D39D49-BC79-41FC-B241-3D2AD174BAC7}
 	EndGlobalSection
 EndGlobal

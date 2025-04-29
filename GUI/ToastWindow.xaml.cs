@@ -1,0 +1,43 @@
+﻿using System.Windows;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
+
+namespace GUI
+{
+    public partial class ToastWindow : Window
+    {
+        public ToastWindow(string title, string message)
+        {
+            InitializeComponent();
+
+            TitleBlock.Text = title;
+            MessageBlock.Text = message;
+
+            var workingArea = SystemParameters.WorkArea;
+            this.Left = workingArea.Right - this.Width - 10;
+            this.Top = workingArea.Bottom - this.Height - 10;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var anim = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.3));
+            this.BeginAnimation(OpacityProperty, anim);
+
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(4);
+            timer.Tick += (s, args) =>
+            {
+                timer.Stop();
+                CloseWithAnimation();
+            };
+            timer.Start();
+        }
+
+        private void CloseWithAnimation()
+        {
+            var anim = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(0.3));
+            anim.Completed += (s, e) => this.Close();
+            this.BeginAnimation(OpacityProperty, anim);
+        }
+    }
+}

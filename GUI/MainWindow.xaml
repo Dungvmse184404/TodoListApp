@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUI" Loaded="Window_Loaded"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent" Height="600" Width="1000">
     <Grid>
         <Border Style="{StaticResource ImgClose}" Panel.ZIndex="1" x:Name="CloseBtn" MouseUp="CloseBtn_MouseUp">
@@ -13,7 +14,7 @@
             <Image Source="/Assets/minimize.png" Height="24" Width="24" />
         </Border>
 
-        <Border CornerRadius="10" Background="#f6f8fa" Padding="10 40 10 10">
+        <Border x:Name="MainBorder" CornerRadius="10" Background="#f6f8fa" Padding="10 40 10 10" MouseDown="Border_MouseDown" >
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -24,11 +25,45 @@
                     <StackPanel>
                         <Border Background="#89c4fb" CornerRadius="10 10 0 0">
                             <StackPanel Margin="5">
-                                <TextBlock Text="Hello, Toufuu" TextAlignment="Center" Foreground="#fff" FontWeight="Bold" Style="{StaticResource NormalText}"/>
+                                <TextBlock Text="Hello" TextAlignment="Center" Foreground="#fff" FontWeight="Bold" Style="{StaticResource NormalText}"/>
 
                                 <StackPanel>
                                     <TextBlock x:Name="RealTime" Text="12:24" TextAlignment="Right" Style="{StaticResource NormalText}"/>
                                     <TextBlock x:Name="RealDate" Text="Mon 22/02/2004" FontSize="12" Style="{StaticResource NormalText}" TextAlignment="Right"/>
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Center">
+                                    <Border Margin="0 0 0 4" BorderThickness="0 0 0 1" BorderBrush="Black">
+                                        <TextBlock Text="Weather" Style="{StaticResource NormalText}" FontSize="12" Foreground="White"/>
+                                    </Border>
+                                    <Grid Width="160">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="20" />
+                                        </Grid.RowDefinitions>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="/Assets/device_thermostat.png" Width="14" Height="14" Margin="0 0 4 0"/>
+                                            <TextBlock x:Name="Temp" Text="36 °C" Style="{StaticResource NormalText}" Foreground="White" FontSize="14" />
+                                        </StackPanel>
+                                        <TextBlock x:Name="FeelTemp" Text="Feel: " Style="{StaticResource NormalText}" Foreground="White" FontSize="14" Grid.Column="1"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                                            <Image Source="/Assets/trending_down.png" Width="14" Height="14" Margin="0 0 4 0"/>
+                                            <TextBlock x:Name="TempMin" Text="36 °C" Style="{StaticResource NormalText}" Foreground="White" FontSize="14"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                                            <Image Source="/Assets/trending_up.png" Width="14" Height="14" Margin="0 0 4 0"/>
+                                            <TextBlock x:Name="TempMax" Text="36 °C" Style="{StaticResource NormalText}" Foreground="White" FontSize="14"/>
+                                        </StackPanel>
+
+                                        <Image x:Name="WeatherIcon" Height="14" Width="14" Grid.Row="2"/>
+                                        <TextBlock x:Name="TempDesc" Grid.Row="2" Grid.Column="1" Style="{StaticResource NormalText}" Foreground="White" FontSize="14"/>
+                                    </Grid>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -71,6 +106,39 @@
                                         </Border>
                                     </StackPanel>
                                 </Border>
+
+                                <Border>
+                                    <StackPanel>
+                                        <StackPanel Margin="0 0 0 12">
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="4 0 0 0">
+                                                <Image Source="/Assets/artist.png" Width="14" Height="14" Margin="0 0 4 0"/>
+                                                <TextBlock x:Name="Artist" Text="Artist" Style="{StaticResource SubText}" FontWeight="Bold"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="4 0 0 0">
+                                                <Image Source="/Assets/music_note.png" Width="14" Height="14" Margin="0 0 4 0"/>
+                                                <TextBlock x:Name="MusicName" Text="Song's name" Style="{StaticResource SubText}" FontWeight="Bold"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        
+                                        <Ellipse x:Name="ellipseDisk" Width="120" Height="120" Margin="0 0 0 12" RenderTransformOrigin="0.5,0.5">
+                                            <Ellipse.Fill>
+                                                <ImageBrush x:Name="MusicImage" ImageSource="/Assets/diathan.png" Stretch="UniformToFill" />
+                                            </Ellipse.Fill>
+                                            <Ellipse.RenderTransform>
+                                                <RotateTransform x:Name="MusicImageRotage" Angle="0" />
+                                            </Ellipse.RenderTransform>
+                                        </Ellipse>
+
+                                        <Border HorizontalAlignment="Center" Padding="2 4" BorderBrush="Black" BorderThickness="0.5">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Image x:Name="StopMusicBtn" MouseUp="StopMusicBtn_MouseUp" Source="/Assets/pause_presentation.png" Height="20" Width="20"/>
+                                                <Image x:Name="PlayMusicBtn" MouseUp="PlayMusicBtn_MouseUp" Source="/Assets/play.png" Height="20" Width="20"/>
+                                                <Image x:Name="PauseMusicBtn" MouseUp="PauseMusicBtn_MouseUp" Source="/Assets/pause.png" Height="20" Width="20"/>
+                                                <Image x:Name="NextMusicBtn" MouseUp="NextMusicBtn_MouseUp" Source="/Assets/skip_next.png" Height="20" Width="20"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -108,7 +176,7 @@
                                             <Image x:Name="ForwardMonthBtn" MouseUp="ForwardMonthBtn_MouseUp" Source="/Assets/arrow_forward.png" Width="12" Height="12" Margin="8 0" />
                                         </StackPanel>
                                         <Border Grid.Column="1" Margin="0 0 24 0">
-                                            <Image x:Name="AddDailyTaskBtn" MouseUp="AddDailyTaskBtn_MouseUp" Source="/Assets/add_circle.png" Width="24" Height="24"/>
+                                            <Image x:Name="AddDailyTaskBtn" MouseLeftButtonUp="AddDailyTaskBtn_MouseUp" Source="/Assets/add_circle.png" Width="24" Height="24"/>
                                         </Border>
                                     </Grid>
                                 </Border>

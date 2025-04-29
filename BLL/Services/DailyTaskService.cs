@@ -34,6 +34,11 @@ namespace BLL.Services
             return await _repo.GetDailyTaskByIdAsync(id);
         }
 
+        public async Task<bool> IsAvailabeSlotAsync(DateTime startTime, DateTime endTime)
+        {
+            return await _repo.IsAvailabeSlotAsync(startTime, endTime);
+        }
+
         public async Task<DailyTask?> UpdateDailyTaskAsync(DailyTask dailyTask)
         {            
             return await _repo.UpdateDailyTaskAsync(dailyTask);
