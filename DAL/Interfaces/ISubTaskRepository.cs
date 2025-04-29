@@ -10,5 +10,6 @@ namespace DAL.Interfaces
         Task AddSubTaskAsync(SubTask SubTask);
         Task<SubTask?> UpdateSubTaskAsync(SubTask UpdateSubTask);
         Task DeleteSubTaskAsync(int id);
+        Task<List<SubTask>> GetSubTaskByTodoTaskIdAsync(int todoTaskId);
     }
 }

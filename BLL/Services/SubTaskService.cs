@@ -3,13 +3,14 @@ using DAL.Interfaces;
 using DAL.Repositories;
 using Models.DTOs;
 using Models.Entities;
+using System.Data;
 
 namespace BLL.Services
 {
     public class SubTaskService : ISubTaskService
     {
         private readonly ISubTaskRepository _repo = new SubTaskRepository();
-
+        private readonly ITodoTaskService _todoTaskRepo = new TodoTaskService();
         public async Task AddSubTaskAsync(SubTask subTask)
         {
             await _repo.AddSubTaskAsync(subTask);
@@ -32,8 +33,12 @@ namespace BLL.Services
 
         public async Task<SubTask?> UpdateSubTaskAsync(SubTask subTask)
         {
+            var result = await _repo.UpdateSubTaskAsync(subTask);
 
-            return await _repo.UpdateSubTaskAsync(subTask);
+            await _todoTaskRepo.UpdateStatus(subTask.TodoTaskId);
+
+            return result;
         }
+
     }
 }

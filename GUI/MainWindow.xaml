@@ -382,8 +382,8 @@
                                     <StackPanel Orientation="Horizontal">
                                         <StackPanel Orientation="Horizontal">
                                             <Label Content="Label's name" />
-                                            <TextBox x:Name="LabelNameSearchInput" Margin="10 0" Width="400" VerticalAlignment="Center"/>
-                                            <Button x:Name="LabelSearchBtn" Click="LabelSearchBtn_Click" FontSize="12" Background="AliceBlue" Content="Search" Style="{StaticResource SideBarButton}"/>
+                                            <TextBox x:Name="LabelNameSearchInput" Margin="16 0" Width="300" FontSize="15" VerticalAlignment="Center" BorderThickness="0,0,0,1"  Foreground="Gray"/>
+                                            <Button x:Name="LabelSearchBtn" Click="LabelSearchBtn_Click" FontSize="12" Background="AliceBlue" Content="Search" Style="{StaticResource SideBarButton}" />
                                             <Button x:Name="AddLabelBtn" Click="AddLabelBtn_Click" FontSize="12" Background="AliceBlue" Content="Add" Style="{StaticResource SideBarButton}" Margin="12 0 0 0"/>
                                         </StackPanel>
                                     </StackPanel>
@@ -405,8 +405,8 @@
                                                         <TextBlock Text="{Binding Key.LabelName}" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold"/>
                                                         <TextBlock Text="{Binding Key.Description}" Style="{StaticResource SubText}" TextWrapping="Wrap" FontSize="16" Margin="0 12"/>
                                                     </StackPanel>
-
-                                                    <ListBox ItemsSource="{Binding Value}" BorderBrush="Transparent" MouseDoubleClick="TodoTasksSubList_MouseDoubleClick">
+                                                    <Border BorderBrush="LightGray" BorderThickness="0 1 0 1" Padding="0 0 0 10" >
+                                                    <ListBox ItemsSource="{Binding Value}" BorderBrush="Transparent" MouseDoubleClick="TodoTasksSubList_MouseDoubleClick"  >
                                                         <ListBox.ItemTemplate>
                                                             <DataTemplate>
                                                                 <Border Background="Transparent" Margin="20 10 0 0" Padding="4" BorderThickness="1" BorderBrush="Black" CornerRadius="4">
@@ -416,10 +416,10 @@
                                                                             <ColumnDefinition Width="*"/>
                                                                             <ColumnDefinition Width="100"/>
                                                                         </Grid.ColumnDefinitions>
-
+                                                                        
                                                                         <Image Source="/Assets/todo_list.png" Height="24" Width="24" />
                                                                         <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontSize="16" Margin="8 0 0 0" Grid.Column="1"/>
-                                                                        <Border Padding="4" CornerRadius="5" Background="#BCF8EC" Grid.Column="2" >
+                                                                        <Border Padding="4" CornerRadius="5" Style="{StaticResource StatusStyle}" Grid.Column="2" >
                                                                             <TextBlock Text="{Binding Status}" Style="{StaticResource SubText}" FontSize="12" TextAlignment="Center"/>
                                                                         </Border>
                                                                     </Grid>
@@ -427,7 +427,7 @@
                                                             </DataTemplate>
                                                         </ListBox.ItemTemplate>
                                                     </ListBox>
-
+                                                    </Border>
                                                     <Image Tag="{Binding Key.LabelId}" x:Name="AddTodoTaskBtn" MouseUp="AddTodoTaskBtn_MouseUp" Source="/Assets/add.png" Height="24" Width="24" HorizontalAlignment="Right"/>
                                                 </StackPanel>
                                             </Border>

@@ -68,11 +68,11 @@ namespace GUI
                         MessageBox.Show("Update task successfully !");
                     }
                     this.Close();
-                } else
+                }
+                else
                 {
                     MessageBox.Show("This time is invalid !", "Warning message", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                    
             }
         }
 
@@ -129,16 +129,21 @@ namespace GUI
                 MessageBox.Show("You need to choose the end time !", "Warning message", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
-            if (StartTime.SelectedTime.Value.TimeOfDay < DateTime.Now.TimeOfDay)
+
+            if (DateInput.SelectedDate == DateTime.Now.Date)
             {
-                MessageBox.Show("Cannot select time in the past !", "Warning message", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
+                if (StartTime.SelectedTime.Value.TimeOfDay < DateTime.Now.TimeOfDay)
+                {
+                    MessageBox.Show("Cannot select time in the past !", "Warning message", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+                if (StartTime.SelectedTime >= EndTime.SelectedTime)
+                {
+                    MessageBox.Show("The end time cannot be earlier than start time !", "Warning message", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
             }
-            if (StartTime.SelectedTime >= EndTime.SelectedTime)
-            {
-                MessageBox.Show("The end time cannot be earlier than start time !", "Warning message", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
+
             return true;
         }
     }
