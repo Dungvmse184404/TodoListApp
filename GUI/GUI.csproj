@@ -25,6 +25,7 @@
     <None Remove="Assets\edit_source.png" />
     <None Remove="Assets\list.png" />
     <None Remove="Assets\minimize.png" />
+    <None Remove="Assets\mixkit-happy-bells-notification-937.wav" />
     <None Remove="Assets\music_note.png" />
     <None Remove="Assets\pause.png" />
     <None Remove="Assets\pause_presentation.png" />
@@ -73,6 +74,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\minimize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\mixkit-happy-bells-notification-937.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\music_note.png">

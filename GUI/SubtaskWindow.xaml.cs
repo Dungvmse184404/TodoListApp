@@ -208,5 +208,13 @@ namespace GUI
 
             this.Close();
         }
+
+        private void MainBorder_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource == MainBorder)
+            {
+                this.DragMove();
+            }
+        }
     }
 }

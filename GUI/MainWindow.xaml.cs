@@ -15,6 +15,7 @@ using NAudio.Wave;
 using ApiExtension.Models.ResponseModels;
 using System.Windows.Shell;
 using System.Threading.Tasks;
+using NAudio.Gui;
 
 namespace GUI
 {
@@ -129,6 +130,14 @@ namespace GUI
                 return bitmap;
             }
             return null;
+        }
+
+        private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (outputDevice != null)
+            {
+                outputDevice.Volume = (float)Volume.Value;
+            }
         }
 
         private async void PlayMusicBtn_MouseUp(object sender, MouseButtonEventArgs e)

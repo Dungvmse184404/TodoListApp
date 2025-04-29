@@ -12,7 +12,7 @@
         </Border>
 
         <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-            <Border CornerRadius="10" Background="#f6f8fa" BorderThickness="1" BorderBrush="Black" Padding="10 40 10 10">
+            <Border x:Name="MainBorder" MouseDown="MainBorder_MouseDown" CornerRadius="10" Background="#f6f8fa" BorderThickness="1" BorderBrush="Black" Padding="10 40 10 10">
                 <StackPanel>
                     <Image Source="/Assets/todo_list.png" Width="32" Height="32" HorizontalAlignment="Left" Margin="5 0 0 0"/>
                     <TextBlock x:Name="TitleShow" Text="" Style="{StaticResource NormalText}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap"/>
